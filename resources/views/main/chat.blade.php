@@ -366,14 +366,14 @@
                         <h2 class="group__title">Start Here</h2>
                         <ul class="group__list">
                             <li>
-                                <a href="index.html" class="fn__tooltip menu__item" data-position="right"
+                                <a href="/" class="fn__tooltip menu__item" data-position="right"
                                     title="Home">
                                     <span class="icon"><img src="{{ asset('chat_assets/svg/home.svg') }}"
                                             alt="" class="fn__svg"></span>
                                     <span class="text">Home</span>
                                 </a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="community-feed.html" class="fn__tooltip menu__item" data-position="right"
                                     title="Community Feed">
                                     <span class="icon"><img src="{{ asset('chat_assets/svg/community.svg') }}"
@@ -396,7 +396,7 @@
                                             alt="" class="fn__svg"></span>
                                     <span class="text">Finetuned Models</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                     <!-- !#1 navigation group -->
@@ -405,14 +405,14 @@
                     <div class="nav_group">
                         <h2 class="group__title">User Tools</h2>
                         <ul class="group__list">
-                            <li>
+                            {{-- <li>
                                 <a href="image-generation.html" class="fn__tooltip menu__item" data-position="right"
                                     title="Image Generation">
                                     <span class="icon"><img src="{{ asset('chat_assets/svg/image.svg') }}"
                                             alt="" class="fn__svg"></span>
                                     <span class="text">Image Generation</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a href="ai-chat-bot.html" class="fn__tooltip active menu__item"
                                     data-position="right" title="AI Chat Bot">
@@ -514,7 +514,7 @@
                                     <div id="chat0" class="chat__item"></div>
 
                                     <div class="chat__item active" id="chat1">
-                                        <div class="chat__box your__chat">
+                                        {{-- <div class="chat__box your__chat">
                                             <div class="author"><span>You</span></div>
                                             <div class="chat">
                                                 <p>What is a chat bot?</p>
@@ -548,7 +548,7 @@
                                                     resolve many types of customer queries and issues while reducing the
                                                     need for human interaction.</p>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     <div class="chat__item" id="chat2"></div>
