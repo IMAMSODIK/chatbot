@@ -526,7 +526,6 @@
                             location.reload();
                         }, 2000);
                     } else {
-                        modal = "#tambah-data-modal";
                         sweetAlert(false, response.message);
                     }
                 },
