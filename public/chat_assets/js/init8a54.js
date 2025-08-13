@@ -174,14 +174,34 @@ var FrenifyTechWaveTime = new Date;
 					else if (13 === a) return e(".fn__chat_comment button").trigger("click"), !1
 				}),
 				e(".fn__chat_comment button").off().on("click", function() {
+					let formData = new FormData();
+
+					let file = $("#input_file")[0].files[0];
+					if(file) {
+						formData.append('regulasi', file);
+					}
+
+					formData.append("_token", $("meta[name='csrf-token']").attr('content'));
+					formData.append("message", $("#fn__chat_textarea").val());
+					formData.append("type", $("#chat-option").val());
+
+					if( $("#chat-option").val() === "Comply ISO 27001" || $("#chat-option").val() === "Comply ISO 20000" ) {
+						var n = e(".fn__chatbot .chat__item.active");
+
+						// Tambahkan bubble bot kosong dengan animasi "typing..."
+						let typingBubble = `
+							<div class="chat__box your__chat"><div class="author"><span>You</span></div><div class="chat"><p>${$("#chat-option").val()}</p></div></div>`
+						n.append(typingBubble);
+
+						e(".fn__chatbot .chat__item.active").append('<div class="chat__box bot__chat"><div class="author"><span>Radar Bot</span></div><div class="chat"><frenify_typing><h3><span>Typing...</frenify></h3></div></div>')
+					}
+
 					$.ajax({
 						url: '/chat/send-message',
 						type: 'POST',
-						data: {
-							message: $("#fn__chat_textarea").val(),
-							type: $("#chat-option").val(),
-							_token: $("meta[name='csrf-token']").attr('content')
-						},
+						contentType: false,
+						processData: false,
+						data: formData,
 						success: function(response) {
 							e(".fn__chatbot .chat__item.active .chat__box.bot__chat:last-child .chat").html(response.chat)
 						},
@@ -333,7 +353,7 @@ var FrenifyTechWaveTime = new Date;
 				// 	} else c = !0
 				// } else c = !0;
 				c && (t = '<p>I only understand some commands. Of course, this is a fixable problem. Buy this template and implement AI and that\'s it. Go to the template site where you can buy? Visit item\'s website: <a href="https://themeforest.net/user/frenify/portfolio" target="_blank">TechWave</a></p><p>Write <frenify_main>/commands</frenify_main> to list all available commands.'), a && (e(".fn__chat_comment button").addClass("disabled"), setTimeout(function() {
-					e(".fn__chatbot .chat__item.active").append('<div class="chat__box bot__chat"><div class="author"><span>Frenify Bot</span></div><div class="chat"><frenify_typing><h3><span>Typing...</frenify></h3></div></div>'), e(".techwave_fn_intro").length ? e("html, body").animate({
+					e(".fn__chatbot .chat__item.active").append('<div class="chat__box bot__chat"><div class="author"><span>Radar Bot</span></div><div class="chat"><frenify_typing><h3><span>Typing...</frenify></h3></div></div>'), e(".techwave_fn_intro").length ? e("html, body").animate({
 						scrollTop: e("#fn__chat_textarea").offset().top - e(window).height() + 100
 					}) : e("html, body").animate({
 						scrollTop: e(document).height() - e(window).height()

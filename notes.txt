@@ -222,3 +222,26 @@ OrgDoc
 OrgDocChunk
 
 
+
+chat table
+id
+group_chat_id
+user_id
+is_user
+is_system
+
+
+group_chat
+id
+name
+
+imlementasikan comply iso berdasarkan link gpt (done)
+
+saat pertama kali chat, masukkan group_chat baru (nama group chat diambil dari pertanyaan user)
+lalu akan mengembalikan response id dari group chat, dan simpan ke tag html (id_group)
+
+jika klik dari new chat, kosong id_group dan ulangi langkah pertama
+
+jika type pertanyaan adalah comply iso, maka nama kategori chat simpan dengan comply iso xxxxx
+
+setiap chat masukkan ke group yang sudah dibuat

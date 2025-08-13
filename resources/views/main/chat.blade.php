@@ -70,6 +70,7 @@
 
     <link type="text/css" rel="stylesheet" href="{{ asset('chat_assets/css/plugins8a54.css?ver=1.0.0') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('chat_assets/css/style8a54.css?ver=1.0.0') }}" />
+    
 
 </head>
 

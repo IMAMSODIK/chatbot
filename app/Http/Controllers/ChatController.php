@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Chat;
 use App\Models\DocumentPage;
 use App\Models\Documents;
+use App\Models\IsoParagraph;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Smalot\PdfParser\Parser;
 
 class ChatController extends Controller
 {
@@ -110,13 +112,89 @@ class ChatController extends Controller
                 'chat' => $answer ?: 'Tidak ada jawaban',
                 'references' => $answer ? $mentionedDocs : []
             ]);
-        }elseif($request->type == 'Comply ISO 27001'){
-            $answer = "anda memilihj 27001";
+        } elseif ($request->type == 'Comply ISO 27001') {
+            $request->validate([
+                'regulasi' => 'required|mimes:pdf|max:90048',
+            ]);
+
+            // Ekstrak teks user dari PDF
+            $parser = new Parser();
+            $pdf = $parser->parseFile($request->file('regulasi')->getPathname());
+            $userText = trim($pdf->getText());
+
+            // Jika teks terlalu panjang, potong agar API Gemini tidak error
+            $maxLength = 2000; // karakter per chunk
+            $userTextChunk = mb_substr($userText, 0, $maxLength);
+
+            // Buat embedding teks user (pakai format Gemini yang benar)
+            $embResp = Http::withHeaders(['Content-Type' => 'application/json'])
+                ->post(
+                    'https://generativelanguage.googleapis.com/v1beta/models/embedding-001:embedContent?key=' . env('GEMINI_API_KEY'),
+                    [
+                        'model' => 'models/embedding-001',
+                        'content' => [
+                            'parts' => [
+                                ['text' => $userTextChunk]
+                            ]
+                        ]
+                    ]
+                );
+
+            $userEmbedding = $embResp->json()['embedding']['values'] ?? [];
+
+            // Cari paragraf ISO paling relevan
+            $isoParagraphs = IsoParagraph::all();
+            $scored = [];
+
+            foreach ($isoParagraphs as $para) {
+                $paraEmbedding = json_decode($para->embedding, true);
+                $score = $this->cosineSimilarityIso($userEmbedding, $paraEmbedding);
+                $scored[] = [
+                    'paragraph' => $para->paragraph,
+                    'score' => $score
+                ];
+            }
+
+            // Urutkan dari relevansi tertinggi
+            usort($scored, fn($a, $b) => $b['score'] <=> $a['score']);
+            $topMatches = array_slice($scored, 0, 5);
+
+            // Gabungkan paragraf relevan
+            $relevantIso = implode("\n\n", array_column($topMatches, 'paragraph'));
+
+            // Buat prompt analisis
+            $prompt = "Bandingkan dokumen berikut dengan standar ISO 27001 (bagian relevan).
+Keluarkan hasil dalam format yang didukung oleh editor richtext html tanpa ```html.
+Format jawaban:
+sesuai: poin-poin yang sesuai dengan ISO 27001,
+perlu_perbaikan: daftar poin yang perlu perbaikan,
+saran: daftar saran.
+
+ISO 27001 (bagian relevan):
+\"\"\"$relevantIso\"\"\"
+
+Dokumen user:
+\"\"\"$userTextChunk\"\"\"";
+
+            // Kirim ke Gemini untuk analisis
+            $response = Http::withHeaders(['Content-Type' => 'application/json'])
+                ->post(
+                    'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . env('GEMINI_API_KEY'),
+                    [
+                        'contents' => [
+                            ['parts' => [['text' => $prompt]]]
+                        ]
+                    ]
+                );
+
+            $hasilJson = $response->json();
+            $hasil = $hasilJson['candidates'][0]['content']['parts'][0]['text'];
+
             return response()->json([
                 'success' => true,
-                'chat' => $answer ?: 'Tidak ada jawaban'
+                'chat' => $hasil ?: 'Tidak ada jawaban'
             ]);
-        }elseif($request->type == 'Comply ISO 20000'){
+        } elseif ($request->type == 'Comply ISO 20000') {
             $answer = "anda memilihj 20000";
             return response()->json([
                 'success' => true,
@@ -151,6 +229,19 @@ class ChatController extends Controller
         // Debug kalau gagal
         Log::error('Embedding error', $data);
         return null;
+    }
+
+    private function cosineSimilarityIso($vecA, $vecB)
+    {
+        $dotProduct = 0.0;
+        $normA = 0.0;
+        $normB = 0.0;
+        for ($i = 0; $i < count($vecA); $i++) {
+            $dotProduct += $vecA[$i] * $vecB[$i];
+            $normA += $vecA[$i] ** 2;
+            $normB += $vecB[$i] ** 2;
+        }
+        return $dotProduct / (sqrt($normA) * sqrt($normB));
     }
 
 
