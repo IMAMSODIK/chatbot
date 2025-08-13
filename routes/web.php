@@ -45,10 +45,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/dokumen', [DocumentsController::class, 'index'])->name('users');
         Route::post('/dokumen/store', [DocumentsController::class, 'store']);
         Route::post('/dokumen/delete', [DocumentsController::class, 'delete']);
-
-        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     });
 
     Route::get('/chat', [ChatController::class, 'index'])->name('chat');
     Route::post('/chat/send-message', [ChatController::class, 'send']);
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

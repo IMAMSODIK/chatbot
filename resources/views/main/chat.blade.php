@@ -306,7 +306,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a id="logout">
+                                            <a id="logout" style="cursor: pointer">
                                                 <span class="icon"><img
                                                         src="{{ asset('chat_assets/svg/logout.svg') }}"
                                                         alt="" class="fn__svg"></span>
