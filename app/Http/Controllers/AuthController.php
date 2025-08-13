@@ -19,14 +19,14 @@ class AuthController extends Controller
 
             if (!$user) {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'message' => 'Email tidak ditemukan.'
                 ]);
             }
 
             if ($user->status != 1) {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'message' => 'Akun Anda belum aktif.'
                 ]);
             }
@@ -34,23 +34,23 @@ class AuthController extends Controller
             // Proses login
             if (auth()->attempt($credentials)) {
                 return response()->json([
-                    'success' => true,
+                    'status' => true,
                     'role' => $user->role,
                 ]);
             }
 
             return response()->json([
-                'success' => false,
+                'status' => false,
                 'message' => 'Password salah.'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
-                'success' => false,
+                'status' => false,
                 'message' => $e->getMessage()
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'success' => false,
+                'status' => false,
                 'message' => $e->getMessage()
             ]);
         }
