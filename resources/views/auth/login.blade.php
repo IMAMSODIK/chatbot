@@ -562,7 +562,7 @@
                 data: formData,
                 success: function(response) {
                     if (response.status) {
-                        if(response.user.role === 'admin') {
+                        if(response.role === 'admin') {
                             location.href = '/dashboard';
                         } else {
                             location.href = '/chat';
