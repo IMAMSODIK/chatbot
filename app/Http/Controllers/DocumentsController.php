@@ -21,39 +21,6 @@ class DocumentsController extends Controller
         return view('dokumen.index', $data);
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'files.*' => 'required|mimes:pdf|max:20480',
-    //     ]);
-
-    //     $results = [];
-    //     foreach ($request->file('files') as $file) {
-    //         $filePath = $file->store('documents', 'public');
-    //         $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-
-    //         $parser = new PdfParser();
-    //         $pdf = $parser->parseFile(storage_path("app/public/{$filePath}"));
-    //         $extractedText = $pdf->getText();
-
-    //         $document = Documents::create([
-    //             'title' => $fileName,
-    //             'file_path' => $filePath,
-    //             'file_type' => 'pdf',
-    //             'extracted_text' => $extractedText,
-    //             'uploaded_by' => auth()->id(),
-    //             'embed' => null
-    //         ]);
-
-    //         $results[] = $document;
-    //     }
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'data' => $results
-    //     ]);
-    // }
-
     public function delete(Request $r)
     {
         $validatedData = $r->validate([
