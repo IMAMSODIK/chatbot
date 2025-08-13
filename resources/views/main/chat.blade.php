@@ -306,7 +306,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="sign-in.html">
+                                            <a id="logout">
                                                 <span class="icon"><img
                                                         src="{{ asset('chat_assets/svg/logout.svg') }}"
                                                         alt="" class="fn__svg"></span>
@@ -570,7 +570,8 @@
                                         </div>
                                         <textarea rows="1" class="fn__hidden_textarea" tabindex="-1"></textarea>
                                         <textarea rows="1" placeholder="Send a message..." id="fn__chat_textarea"></textarea>
-                                        <input type="file" name="" id="input_file" accept="pdf" style="display: none;">
+                                        <input type="file" name="" id="input_file" accept="pdf"
+                                            style="display: none;">
                                         <button id="generate-btn">
                                             <img src="{{ asset('chat_assets/svg/enter.svg') }}" alt=""
                                                 class="fn__svg">
@@ -767,16 +768,33 @@
             $("#chat-type").data("type", selectedChatType);
             $("#chat-type").text(selectedChatType);
 
-            if(selectedChatType === 'Tanya Jawab'){
+            if (selectedChatType === 'Tanya Jawab') {
                 $("#fn__chat_textarea").css('display', '');
                 $("#input_file").css('display', 'none');
-            }else{
+            } else {
                 $("#fn__chat_textarea").css('display', 'none');
                 $("#input_file").css('display', '');
             }
 
             ct.removeClass("opened");
         });
+
+        $("#logout").on("click", function() {
+            let token = $("meta[name='csrf-token']").attr('content');
+            $.ajax({
+                url: '/logout',
+                method: 'POST',
+                data: {
+                    "_token": token
+                },
+                success: function(response) {
+                    location.href = '/login'
+                },
+                error: function(response) {
+                    alert(response.message);
+                }
+            })
+        })
     </script>
 </body>
 
