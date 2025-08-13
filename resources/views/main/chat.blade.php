@@ -161,7 +161,7 @@
                             <span class="count">120</span>
                             <span class="text">Tokens<br>Remain</span>
                         </span> --}}
-                        <a id="chat_type__trigger" class="token_upgrade techwave_fn_button"><span id="chat-type"
+                        <a id="chat_type__trigger" style="cursor: pointer" class="token_upgrade techwave_fn_button"><span id="chat-type"
                                 data-type="Tanya Jawab">Tanya Jawab</span></a>
                         <div class="token__popup">
                             Silahkan pilih jenis chat yang ingin Anda gunakan. Setiap jenis chat memiliki fitur dan

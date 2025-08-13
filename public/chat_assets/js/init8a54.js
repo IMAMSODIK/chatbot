@@ -179,6 +179,7 @@ var FrenifyTechWaveTime = new Date;
 						type: 'POST',
 						data: {
 							message: $("#fn__chat_textarea").val(),
+							type: $("#chat-option").val(),
 							_token: $("meta[name='csrf-token']").attr('content')
 						},
 						success: function(response) {
