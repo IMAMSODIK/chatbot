@@ -503,7 +503,7 @@
                             <div class="fn__title_holder">
                                 <div class="container">
                                     <!-- Active chat title -->
-                                    <h1 class="title">Chat Bot Definition</h1>
+                                    {{-- <h1 class="title">Chat Bot Definition</h1> --}}
                                     <!-- !Active chat title -->
                                 </div>
                             </div>
