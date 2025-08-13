@@ -1,0 +1,169 @@
+membuat landing page
+membuat form login/registrasi
+    registrasi 
+        -> nama
+        -> email
+        -> file_identitas
+        -> role
+        -> password
+
+membuat dashboar admin
+membuat menu crud upload dokumen
+
+
+
+
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Documents;
+use Google\Cloud\Vision\V1\ImageAnnotatorClient; // contoh untuk OCR, kalau perlu
+use Illuminate\Support\Facades\Storage;
+use OpenAI\Client;  // Gemini compatible OpenAI client
+
+class DocumentController extends Controller
+{
+    protected $openai;
+
+    public function __construct()
+    {
+        $this->openai = new Client(env('OPENAI_API_KEY')); // Gemini API key
+    }
+
+    // Upload & ekstrak teks + buat embedding
+    public function store(Request $request)
+    {
+        $request->validate([
+            'files.*' => 'required|mimes:pdf|max:20480',
+        ]);
+
+        $results = [];
+
+        foreach ($request->file('files') as $file) {
+            $filePath = $file->store('documents', 'public');
+            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+            // Ekstrak teks dari PDF (gunakan smalot/pdfparser misal)
+            $parser = new \Smalot\PdfParser\Parser();
+            $pdf = $parser->parseFile(storage_path("app/public/{$filePath}"));
+            $extractedText = $pdf->getText();
+
+            // Buat embedding pakai Gemini (OpenAI compatible)
+            $embeddingResponse = $this->openai->embeddings()->create([
+                'model' => 'gemini-embedding-001',  // sesuaikan nama model Gemini embedding
+                'input' => $extractedText,
+            ]);
+
+            $embeddingVector = $embeddingResponse->data[0]->embedding;
+
+            // Simpan ke database
+            $document = Documents::create([
+                'title' => $fileName,
+                'file_path' => $filePath,
+                'file_type' => 'pdf',
+                'extracted_text' => $extractedText,
+                'user_id' => auth()->id(),
+                'embed' => json_encode($embeddingVector),
+            ]);
+
+            $results[] = $document;
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $results,
+        ]);
+    }
+
+
+    // Cari dokumen berdasarkan pesan user
+    public function search(Request $request)
+    {
+        $request->validate([
+            'message' => 'required|string',
+        ]);
+
+        $query = $request->message;
+
+        // Buat embedding vektor dari query user
+        $embeddingResponse = $this->openai->embeddings()->create([
+            'model' => 'gemini-embedding-001',
+            'input' => $query,
+        ]);
+        $queryVector = $embeddingResponse->data[0]->embedding;
+
+        // Ambil dokumen yang punya embedding
+        $documents = Documents::whereNotNull('embed')->get();
+
+        // Hitung similarity
+        $results = [];
+        foreach ($documents as $doc) {
+            $docVector = json_decode($doc->embed);
+
+            $similarity = $this->cosineSimilarity($queryVector, $docVector);
+
+            $results[] = [
+                'document' => $doc,
+                'similarity' => $similarity,
+            ];
+        }
+
+        // Urutkan descending berdasarkan similarity
+        usort($results, fn($a, $b) => $b['similarity'] <=> $a['similarity']);
+
+        // Ambil 3 hasil teratas
+        $topResults = array_slice($results, 0, 3);
+
+        // Buat respons string gabungan dari dokumen teratas
+        $responseText = "";
+        foreach ($topResults as $res) {
+            $responseText .= "Menurut dokumen '{$res['document']->title}':\n";
+            // Ambil beberapa kalimat awal sebagai ringkasan (misal 200 karakter)
+            $snippet = substr($res['document']->extracted_text, 0, 200);
+            $responseText .= trim($snippet) . "...\n\n";
+        }
+
+        return response()->json([
+            'status' => true,
+            'response' => $responseText,
+            'top_docs' => $topResults,
+        ]);
+    }
+
+
+    // Fungsi hitung cosine similarity antara dua vektor
+    private function cosineSimilarity(array $vecA, array $vecB): float
+    {
+        $dot = 0.0;
+        $normA = 0.0;
+        $normB = 0.0;
+
+        $len = count($vecA);
+        for ($i = 0; $i < $len; $i++) {
+            $dot += $vecA[$i] * $vecB[$i];
+            $normA += $vecA[$i] * $vecA[$i];
+            $normB += $vecB[$i] * $vecB[$i];
+        }
+
+        if ($normA == 0 || $normB == 0) {
+            return 0;
+        }
+
+        return $dot / (sqrt($normA) * sqrt($normB));
+    }
+}
+
+
+event hapus dengan metode soft delete
+buat kolom untuk menampung jumlah pembelian tiket (jangan decrement)
+logo belum masuk (perbaiki asset)
+user juga soft delete
+
+kalau pembayaran berhasil belum bisa refresh
+
+
+
+
