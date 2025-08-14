@@ -117,16 +117,16 @@ class ChatController extends Controller
                 'regulasi' => 'required|mimes:pdf|max:90048',
             ]);
 
-            // Ekstrak teks user dari PDF
-            $parser = new Parser();
+            // Ekstrak teks dari PDF user
+            $parser = new \Smalot\PdfParser\Parser();
             $pdf = $parser->parseFile($request->file('regulasi')->getPathname());
             $userText = trim($pdf->getText());
 
-            // Jika teks terlalu panjang, potong agar API Gemini tidak error
-            $maxLength = 2000; // karakter per chunk
+            // Potong teks user agar aman (hanya sebagian diambil untuk analisis awal)
+            $maxLength = 2000;
             $userTextChunk = mb_substr($userText, 0, $maxLength);
 
-            // Buat embedding teks user (pakai format Gemini yang benar)
+            // Buat embedding dokumen user
             $embResp = Http::withHeaders(['Content-Type' => 'application/json'])
                 ->post(
                     'https://generativelanguage.googleapis.com/v1beta/models/embedding-001:embedContent?key=' . env('GEMINI_API_KEY'),
@@ -142,7 +142,7 @@ class ChatController extends Controller
 
             $userEmbedding = $embResp->json()['embedding']['values'] ?? [];
 
-            // Cari paragraf ISO paling relevan
+            // Ambil semua paragraf ISO yang sudah ada di database
             $isoParagraphs = IsoParagraph::all();
             $scored = [];
 
@@ -151,30 +151,39 @@ class ChatController extends Controller
                 $score = $this->cosineSimilarityIso($userEmbedding, $paraEmbedding);
                 $scored[] = [
                     'paragraph' => $para->paragraph,
+                    'page' => $para->page,
                     'score' => $score
                 ];
             }
 
-            // Urutkan dari relevansi tertinggi
+            // Urutkan dari skor terbesar ke terkecil
             usort($scored, fn($a, $b) => $b['score'] <=> $a['score']);
+
+            // Ambil 5 paragraf paling relevan
             $topMatches = array_slice($scored, 0, 5);
 
-            // Gabungkan paragraf relevan
-            $relevantIso = implode("\n\n", array_column($topMatches, 'paragraph'));
+            // Buat teks ISO relevan dengan format poin & halaman
+            $relevantIso = implode("\n\n", array_map(function ($match, $i) {
+                return "Poin " . ($i + 1) . " (Halaman {$match['page']}): {$match['paragraph']}";
+            }, $topMatches, array_keys($topMatches)));
 
-            // Buat prompt analisis
-            $prompt = "Bandingkan dokumen berikut dengan standar ISO 27001 (bagian relevan).
-Keluarkan hasil dalam format yang didukung oleh editor richtext html tanpa ```html.
-Format jawaban:
-sesuai: poin-poin yang sesuai dengan ISO 27001,
-perlu_perbaikan: daftar poin yang perlu perbaikan,
-saran: daftar saran.
+            // Prompt ke Gemini agar menyertakan halaman dalam analisis
+            $prompt = <<<EOT
+Analisis kesesuaian dokumen berikut dengan ISO 27001.
 
-ISO 27001 (bagian relevan):
-\"\"\"$relevantIso\"\"\"
+Tampilkan hasil dalam format HTML richtext (tanpa blok kode atau ```).
+
+Struktur jawaban:
+1. **Sesuai** — jelaskan poin yang sudah sesuai, sertakan referensi halaman ISO (contoh: "... sesuai dengan ISO 27001 yang dijelaskan di halaman 12").
+2. **Perlu Perbaikan** — jelaskan poin yang kurang sesuai, sertakan referensi halaman ISO.
+3. **Saran** — berikan rekomendasi perbaikan, tetap sertakan halaman acuan dari ISO.
+
+Data ISO relevan (nomor poin & halaman):
+$relevantIso
 
 Dokumen user:
-\"\"\"$userTextChunk\"\"\"";
+$userTextChunk
+EOT;
 
             // Kirim ke Gemini untuk analisis
             $response = Http::withHeaders(['Content-Type' => 'application/json'])
@@ -188,11 +197,11 @@ Dokumen user:
                 );
 
             $hasilJson = $response->json();
-            $hasil = $hasilJson['candidates'][0]['content']['parts'][0]['text'];
+            $hasil = $hasilJson['candidates'][0]['content']['parts'][0]['text'] ?? 'Tidak ada jawaban';
 
             return response()->json([
                 'success' => true,
-                'chat' => $hasil ?: 'Tidak ada jawaban'
+                'chat' => $hasil
             ]);
         } elseif ($request->type == 'Comply ISO 20000') {
             $answer = "anda memilihj 20000";

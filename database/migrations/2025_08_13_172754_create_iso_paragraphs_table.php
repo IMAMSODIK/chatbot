@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('iso_paragraphs', function (Blueprint $table) {
             $table->id();
             $table->text('paragraph');
+            $table->integer('page')->nullable();
             $table->json('embedding');
             $table->timestamps();
         });

@@ -187,8 +187,6 @@ var FrenifyTechWaveTime = new Date;
 
 					if( $("#chat-option").val() === "Comply ISO 27001" || $("#chat-option").val() === "Comply ISO 20000" ) {
 						var n = e(".fn__chatbot .chat__item.active");
-
-						// Tambahkan bubble bot kosong dengan animasi "typing..."
 						let typingBubble = `
 							<div class="chat__box your__chat"><div class="author"><span>You</span></div><div class="chat"><p>${$("#chat-option").val()}</p></div></div>`
 						n.append(typingBubble);

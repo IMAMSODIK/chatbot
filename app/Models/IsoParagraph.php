@@ -9,7 +9,7 @@ class IsoParagraph extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['paragraph', 'embedding'];
+    protected $guarded = ['id'];
     protected $casts = [
         'embedding' => 'array',
     ];

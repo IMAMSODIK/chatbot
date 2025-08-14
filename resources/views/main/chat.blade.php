@@ -592,87 +592,12 @@
                             </div>
                             <div class="sidebar_content">
                                 <div class="chat__group new">
-                                    <h2 class="group__title">Today</h2>
+                                    <h2 class="group__title">Chats</h2>
                                     <ul class="group__list">
                                         <li class="group__item">
                                             <div class="fn__chat_link active" href="#chat1">
                                                 <span class="text">Chat Bot Definition</span>
                                                 <input type="text" value="Chat Bot Definition">
-                                                <span class="options">
-                                                    <button class="trigger"><span></span></button>
-                                                    <span class="options__popup">
-                                                        <span class="options__list">
-                                                            <button class="edit">Edit</button>
-                                                            <button class="delete">Delete</button>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span class="save_options">
-                                                    <button class="save">
-                                                        <img src="{{ asset('chat_assets/svg/check.svg') }}"
-                                                            alt="" class="fn__svg">
-                                                    </button>
-                                                    <button class="cancel">
-                                                        <img src="{{ asset('chat_assets/svg/close.svg') }}"
-                                                            alt="" class="fn__svg">
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li class="group__item">
-                                            <div class="fn__chat_link" href="#chat2">
-                                                <span class="text">Essay: Marketing</span>
-                                                <input type="text" value="Essay: Marketing">
-                                                <span class="options">
-                                                    <button class="trigger"><span></span></button>
-                                                    <span class="options__popup">
-                                                        <span class="options__list">
-                                                            <button class="edit">Edit</button>
-                                                            <button class="delete">Delete</button>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span class="save_options">
-                                                    <button class="save">
-                                                        <img src="{{ asset('chat_assets/svg/check.svg') }}"
-                                                            alt="" class="fn__svg">
-                                                    </button>
-                                                    <button class="cancel">
-                                                        <img src="{{ asset('chat_assets/svg/close.svg') }}"
-                                                            alt="" class="fn__svg">
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li class="group__item">
-                                            <div class="fn__chat_link" href="#chat3">
-                                                <span class="text">Future of Social Media</span>
-                                                <input type="text" value="Future of Social Media">
-                                                <span class="options">
-                                                    <button class="trigger"><span></span></button>
-                                                    <span class="options__popup">
-                                                        <span class="options__list">
-                                                            <button class="edit">Edit</button>
-                                                            <button class="delete">Delete</button>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                                <span class="save_options">
-                                                    <button class="save">
-                                                        <img src="{{ asset('chat_assets/svg/check.svg') }}"
-                                                            alt="" class="fn__svg">
-                                                    </button>
-                                                    <button class="cancel">
-                                                        <img src="{{ asset('chat_assets/svg/close.svg') }}"
-                                                            alt="" class="fn__svg">
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li class="group__item">
-                                            <div class="fn__chat_link" href="#chat4">
-                                                <span class="text">Business Ideas</span>
-                                                <input type="text" value="Business Ideas">
                                                 <span class="options">
                                                     <button class="trigger"><span></span></button>
                                                     <span class="options__popup">
