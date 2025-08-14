@@ -184,6 +184,7 @@ var FrenifyTechWaveTime = new Date;
 					formData.append("_token", $("meta[name='csrf-token']").attr('content'));
 					formData.append("message", $("#fn__chat_textarea").val());
 					formData.append("type", $("#chat-option").val());
+					formData.append("group_chat", $("#group-chat").val());
 
 					if( $("#chat-option").val() === "Comply ISO 27001" || $("#chat-option").val() === "Comply ISO 20000" ) {
 						var n = e(".fn__chatbot .chat__item.active");
@@ -201,6 +202,7 @@ var FrenifyTechWaveTime = new Date;
 						processData: false,
 						data: formData,
 						success: function(response) {
+							$("#group-chat").val(response.group_chat_id);
 							e(".fn__chatbot .chat__item.active .chat__box.bot__chat:last-child .chat").html(response.chat)
 						},
 						error: function(xhr, status, error) {
@@ -218,7 +220,7 @@ var FrenifyTechWaveTime = new Date;
 							n.removeClass("active"), e(".fn__new_chat_link").removeClass("active");
 							var l = e(".fn__chatbot .chat__item").length;
 							e(".fn__chatbot .chat__list").append('<div class="chat__item active" id="chat' + l + '">' + i + "</div>");
-							var h = '<li class="group__item"><div class="fn__chat_link active" href="#chat' + l + '"><span class="text">New Chat</span><input type="text" value="New Chat"><span class="options"><button class="trigger"><span></span></button><span class="options__popup"><span class="options__list"><button class="edit">Edit</button><button class="delete">Delete</button></span></span></span><span class="save_options"><button class="save"><img src="svg/check.svg" alt="" class="fn__svg"></button><button class="cancel"><img src="svg/close.svg" alt="" class="fn__svg"></button></span></div></li>';
+							var h = '<li class="group__item"><div class="fn__chat_link active" href="#chat' + l + '"><span class="text">Teset</span><input type="text" value="Teset"><span class="options"><button class="trigger"><span></span></button><span class="options__popup"><span class="options__list"><button class="edit">Edit</button><button class="delete">Delete</button></span></span></span><span class="save_options"><button class="save"><img src="svg/check.svg" alt="" class="fn__svg"></button><button class="cancel"><img src="svg/close.svg" alt="" class="fn__svg"></button></span></div></li>';
 							e(".fn__chatbot .chat__group.new").length ? e(".fn__chatbot .chat__group.new ul").append(h) : e(".fn__chatbot .sidebar_content").prepend('<div class="chat__group"><h2 class="group__title">Today</h2><ul class="group__list">' + h + "</ul></div>"), r.imgToSVG(), r.aiChatBotOptions()
 						} else n.append(i);
 						return a.val(""), a.siblings(".fn__hidden_textarea").val(""), r.aiChatBotTextareaHeight(), e(".techwave_fn_intro").length ? e("html, body").animate({
@@ -389,8 +391,9 @@ var FrenifyTechWaveTime = new Date;
 					var t = e(this);
 					return t.hasClass("active") || (e(".fn__chat_link.active").removeClass("active"), e(".fn__chatbot .chat__item.active").removeClass("active"), t.addClass("active"), e(t.attr("href")).addClass("active"), i = e(t.attr("href")).find(".chat__box").length, e(".fn__new_chat_link").removeClass("active"), e(".fn__chat_comment").removeClass("neww"), e(".fn__chatbot .fn__title_holder .title").text(t.find(".text").text()), "" === e(t.attr("href")).html() && e(".fn__chat_comment").addClass("neww")), e("#fn__chat_textarea").frenifyMoveCursorToEnd(), !1
 				}), e(".fn__new_chat_link").off().on("click", function() {
+					$("#group-chat").val('');
 					var t = e(this);
-					return t.hasClass("active") || (e(".fn__chat_link.active").removeClass("active"), e(".fn__chatbot .chat__item.active").removeClass("active"), t.addClass("active"), e(t.attr("href")).addClass("active"), i = 0, e(".fn__chatbot .fn__title_holder .title").text("New Chat")), e(".fn__chat_comment").addClass("neww"), e("#fn__chat_textarea").frenifyMoveCursorToEnd(), !1
+					return t.hasClass("active") || (e(".fn__chat_link.active").removeClass("active"), e(".fn__chatbot .chat__item.active").removeClass("active"), t.addClass("active"), e(t.attr("href")).addClass("active"), i = 0, e(".fn__chatbot .fn__title_holder .title").text("Teset")), e(".fn__chat_comment").addClass("neww"), e("#fn__chat_textarea").frenifyMoveCursorToEnd(), !1
 				}), e(".fn__chat_link input").off().on("click", function(e) {
 					e.stopPropagation()
 				}), e(".fn__chat_link .trigger").off().on("click", function() {

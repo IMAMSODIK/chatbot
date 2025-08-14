@@ -70,12 +70,12 @@
 
     <link type="text/css" rel="stylesheet" href="{{ asset('chat_assets/css/plugins8a54.css?ver=1.0.0') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('chat_assets/css/style8a54.css?ver=1.0.0') }}" />
-    
+
 
 </head>
 
 <body>
-
+    <input type="hidden" name="" id="group-chat">
     <div class="techwave_fn_fixedsub">
         <ul></ul>
     </div>
@@ -162,7 +162,8 @@
                             <span class="count">120</span>
                             <span class="text">Tokens<br>Remain</span>
                         </span> --}}
-                        <a id="chat_type__trigger" style="cursor: pointer" class="token_upgrade techwave_fn_button"><span id="chat-type"
+                        <a id="chat_type__trigger" style="cursor: pointer"
+                            class="token_upgrade techwave_fn_button"><span id="chat-type"
                                 data-type="Tanya Jawab">Tanya Jawab</span></a>
                         <div class="token__popup">
                             Silahkan pilih jenis chat yang ingin Anda gunakan. Setiap jenis chat memiliki fitur dan
@@ -591,7 +592,7 @@
                                 </a>
                             </div>
                             <div class="sidebar_content">
-                                <div class="chat__group new">
+                                {{-- <div class="chat__group new">
                                     <h2 class="group__title">Chats</h2>
                                     <ul class="group__list">
                                         <li class="group__item">
@@ -620,7 +621,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -721,6 +722,86 @@
                 }
             })
         })
+    </script>
+
+
+    <script>
+        // pertama kali user masuk -> check apakah ada group chat terbaru berdasarkan user login
+        // ada -> ambil semua chat berdasarkan user login dan grou chat id
+        //         ambil semua group chat
+        //         isi id group chat di html
+        // jika tidak, maka group chat akan dibuat pada saat mengirim pesan
+        // pada saat klik new chat, kosongkan id group chat di html
+        // pada saat klik kategori chat, kosongkan konten html dan isi dengan chats dari kategori dam isi grup id di html
+
+
+        $(document).ready(function() {
+            $.ajax({
+                url: '/chat/get-group-chat',
+                method: 'GET',
+                success: function(response) {
+                    if (response.status) {
+                        let html = `
+                <div class="chat__group new">
+                    <h2 class="group__title">Chats</h2>
+                    <ul class="group__list">
+            `;
+
+                        if (response.kategori.length > 0) {
+                            $.each(response.kategori, function(index, chat) {
+                                let isActive = (chat.id === response.latest_group_chat.id) ?
+                                    'active' : '';
+                                let shortTitle = chat.title.length > 23 ? chat.title.substring(0, 23) + '...' : chat.title;
+                                html += `
+                        <li class="group__item">
+                            <div class="fn__chat_link ${isActive}" data-id="${chat.id}">
+                                <span class="text">${shortTitle}</span>
+                                <input type="text" value="${shortTitle}">
+                                <span class="options">
+                                    <button class="trigger"><span></span></button>
+                                    <span class="options__popup">
+                                        <span class="options__list">
+                                            <button class="edit">Edit</button>
+                                            <button class="delete">Delete</button>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span class="save_options">
+                                    <button class="save">
+                                        <img src="/chat_assets/svg/check.svg" alt="" class="fn__svg">
+                                    </button>
+                                    <button class="cancel">
+                                        <img src="/chat_assets/svg/close.svg" alt="" class="fn__svg">
+                                    </button>
+                                </span>
+                            </div>
+                        </li>
+                    `;
+                            });
+                        } else {
+                            html += `<li class="group__item"><em>Belum ada chat</em></li>`;
+                        }
+
+                        html += `</ul></div>`;
+
+                        // Masukkan ke .sidebar_content
+                        $(".sidebar_content").html(html);
+
+                        // Set nilai input hidden group-chat
+                        if (response.latest_group_chat) {
+                            $("#group-chat").val(response.latest_group_chat.id);
+                        } else {
+                            $("#group-chat").val('');
+                        }
+                    } else {
+                        alert('Failed to load group chats');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.statusText);
+                }
+            });
+        });
     </script>
 </body>
 

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('group_chat_id');
-            $table->text('message')->nullable();
+            $table->boolean('is_user')->default(true);
+            $table->boolean('is_system')->default(false);
+            $table->text('message');
             $table->timestamps();
         });
     }

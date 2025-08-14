@@ -10,4 +10,9 @@ class Chat extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function groupChat()
+    {
+        return $this->belongsTo(GroupChat::class);
+    }
 }

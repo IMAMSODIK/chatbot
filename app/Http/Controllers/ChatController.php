@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chat;
 use App\Models\DocumentPage;
 use App\Models\Documents;
+use App\Models\GroupChat;
 use App\Models\IsoParagraph;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -72,10 +73,34 @@ class ChatController extends Controller
             $topPages = $scoredPages->sortByDesc('similarity')->take(5);
 
             if ($topPages->isEmpty()) {
+                if($request->group_chat) {
+                    $groupChat = GroupChat::where('id', $request->group_chat)->first();
+                } else {
+                    $groupChat = GroupChat::create([
+                        'user_id' => auth()->id(),
+                        'title' => $query
+                    ]);
+                }
+                Chat::create([
+                    'group_chat_id' => $groupChat->id,
+                    'is_user' => true,
+                    'is_system' => false,
+                    'message' => $query
+                ]);
+
+                Chat::create([
+                    'group_chat_id' => $groupChat->id,
+                    'is_system' => true,
+                    'is_user' => false,
+                    'message' => 'Tidak ada jawaban'
+                ]);
+                DB::commit();
+
                 return response()->json([
                     'success' => true,
                     'chat' => 'Tidak ada jawaban',
-                    'references' => []
+                    'references' => [],
+                    'group_chat_id' => $groupChat->id
                 ]);
             }
 
@@ -107,11 +132,41 @@ class ChatController extends Controller
                 }
             }
 
-            return response()->json([
-                'success' => true,
-                'chat' => $answer ?: 'Tidak ada jawaban',
-                'references' => $answer ? $mentionedDocs : []
-            ]);
+            DB::beginTransaction();
+            try {
+                if($request->group_chat) {
+                    $groupChat = GroupChat::where('id', $request->group_chat)->first();
+                } else {
+                    $groupChat = GroupChat::create([
+                        'user_id' => auth()->id(),
+                        'title' => $query
+                    ]);
+                }
+                Chat::create([
+                    'group_chat_id' => $groupChat->id,
+                    'is_user' => true,
+                    'is_system' => false,
+                    'message' => $query
+                ]);
+
+                Chat::create([
+                    'group_chat_id' => $groupChat->id,
+                    'is_system' => true,
+                    'is_user' => false,
+                    'message' => $answer
+                ]);
+                DB::commit();
+
+                return response()->json([
+                    'success' => true,
+                    'chat' => $answer ?: 'Tidak ada jawaban',
+                    'references' => $answer ? $mentionedDocs : [],
+                    'group_chat_id' => $groupChat->id
+                ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Error saving chat', ['error' => $e->getMessage()]);
+            }
         } elseif ($request->type == 'Comply ISO 27001') {
             $request->validate([
                 'regulasi' => 'required|mimes:pdf|max:90048',
@@ -290,5 +345,31 @@ EOT;
 
         $data = $response->json();
         return $data['candidates'][0]['content']['parts'][0]['text'] ?? null;
+    }
+
+    public function getGroupChat(Request $request)
+    {
+        try {
+            $kategori = GroupChat::where('user_id', auth()->id())
+                ->with('chats')
+                ->orderBy('updated_at', 'desc')
+                ->get();
+
+            $latestGroupChat = GroupChat::where('user_id', auth()->id())
+                ->with('chats')
+                ->orderBy('updated_at', 'desc')
+                ->first();
+
+            return response()->json([
+                'status' => true,
+                'kategori' => $kategori,
+                'latest_group_chat' => $latestGroupChat,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }
