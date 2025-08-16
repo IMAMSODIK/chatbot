@@ -115,7 +115,7 @@ class ChatController extends Controller
             $prompt = "Gunakan informasi berikut untuk menjawab pertanyaan.\n\n"
                 . "Context:\n$context\n\n"
                 . "Pertanyaan: $query\n\n"
-                . "Format jawaban: Sebutkan dokumen dan halaman yang relevan, misal menurut dokumen A halaman xx dijelaskan... juga berikan jawaban dalam format html karena saya ingin menampilkannya di richtext, dan tanpa ada ```html```.\n"
+                . "Format jawaban: Sebutkan dokumen dan halaman yang relevan, misal menurut dokumen A halaman xx dijelaskan... juga berikan jawaban dalam format HTML karena saya ingin menampilkannya di richtext, dan tanpa ada ```html```.\n"
                 . "Jawaban:";
 
             $answer = $this->askGemini($prompt);
