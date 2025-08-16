@@ -516,41 +516,7 @@
                                     <div id="chat0" class="chat__item"></div>
 
                                     <div class="chat__item active" id="chat1">
-                                        {{-- <div class="chat__box your__chat">
-                                            <div class="author"><span>You</span></div>
-                                            <div class="chat">
-                                                <p>What is a chat bot?</p>
-                                            </div>
-                                        </div>
-                                        <div class="chat__box bot__chat">
-                                            <div class="author"><span>Bot</span></div>
-                                            <div class="chat">
-                                                <p>At the most basic level, a chatbot is a computer program that
-                                                    simulates and processes human conversation (either written or
-                                                    spoken), allowing humans to interact with digital devices as if they
-                                                    were communicating with a real person. Chatbots can be as simple as
-                                                    rudimentary programs that answer a simple query with a single-line
-                                                    response, or as sophisticated as digital assistants that learn and
-                                                    evolve to deliver increasing levels of personalization as they
-                                                    gather and process information.</p>
-                                            </div>
-                                        </div>
-                                        <div class="chat__box your__chat">
-                                            <div class="author"><span>You</span></div>
-                                            <div class="chat">
-                                                <p>How do chatbots work?</p>
-                                            </div>
-                                        </div>
-                                        <div class="chat__box bot__chat">
-                                            <div class="author"><span>Bot</span></div>
-                                            <div class="chat">
-                                                <p>Chatbots boost operational efficiency and bring cost savings to
-                                                    businesses while offering convenience and added services to internal
-                                                    employees and external customers. They allow companies to easily
-                                                    resolve many types of customer queries and issues while reducing the
-                                                    need for human interaction.</p>
-                                            </div>
-                                        </div> --}}
+
                                     </div>
 
                                     <div class="chat__item" id="chat2"></div>
@@ -742,42 +708,56 @@
                 success: function(response) {
                     if (response.status) {
                         let html = `
-                <div class="chat__group new">
-                    <h2 class="group__title">Chats</h2>
-                    <ul class="group__list">
-            `;
+                            <div class="chat__group new">
+                                <h2 class="group__title">Chats</h2>
+                                <ul class="group__list">
+                            `;
 
                         if (response.kategori.length > 0) {
                             $.each(response.kategori, function(index, chat) {
                                 let isActive = (chat.id === response.latest_group_chat.id) ?
                                     'active' : '';
-                                let shortTitle = chat.title.length > 23 ? chat.title.substring(0, 23) + '...' : chat.title;
+                                let shortTitle = chat.title.length > 23 ? chat.title.substring(
+                                    0, 23) + '...' : chat.title;
                                 html += `
-                        <li class="group__item">
-                            <div class="fn__chat_link ${isActive}" data-id="${chat.id}">
-                                <span class="text">${shortTitle}</span>
-                                <input type="text" value="${shortTitle}">
-                                <span class="options">
-                                    <button class="trigger"><span></span></button>
-                                    <span class="options__popup">
-                                        <span class="options__list">
-                                            <button class="edit">Edit</button>
-                                            <button class="delete">Delete</button>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span class="save_options">
-                                    <button class="save">
-                                        <img src="/chat_assets/svg/check.svg" alt="" class="fn__svg">
-                                    </button>
-                                    <button class="cancel">
-                                        <img src="/chat_assets/svg/close.svg" alt="" class="fn__svg">
-                                    </button>
-                                </span>
-                            </div>
-                        </li>
-                    `;
+                                        <li class="group__item">
+                                            <div class="fn__chat_link ${isActive}" data-id="${chat.id}">
+                                                <span class="text">${shortTitle}</span>
+                                                <input type="text" value="${shortTitle}">
+                                                <span class="options">
+                                                    <button class="trigger"><span></span></button>
+                                                    <span class="options__popup">
+                                                        <span class="options__list">
+                                                            <button class="edit">Edit</button>
+                                                            <button class="delete">Delete</button>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                <span class="save_options">
+                                                    <button class="save">
+                                                        <img src="/chat_assets/svg/check.svg" alt="" class="fn__svg">
+                                                    </button>
+                                                    <button class="cancel">
+                                                        <img src="/chat_assets/svg/close.svg" alt="" class="fn__svg">
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    `;
                             });
+
+                            let activeChat = $(".chat__item.active");
+                            activeChat.empty();
+
+                            response.latest_group_chat.chats.forEach(chat => {
+                                let bubbleChat = chat.is_user ?
+                                    `<div class="chat__box your__chat"><div class="author"><span>You</span></div><div class="chat"><p>${chat.message}</p></div></div>` :
+                                    `<div class="chat__box bot__chat"><div class="author"><span>Radar Bot</span></div><div class="chat">${chat.message}</div></div>`;
+
+                                activeChat.append(bubbleChat);
+                            });
+
+
                         } else {
                             html += `<li class="group__item"><em>Belum ada chat</em></li>`;
                         }

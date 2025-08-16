@@ -245,3 +245,32 @@ jika klik dari new chat, kosong id_group dan ulangi langkah pertama
 jika type pertanyaan adalah comply iso, maka nama kategori chat simpan dengan comply iso xxxxx
 
 setiap chat masukkan ke group yang sudah dibuat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+load sesio group chat saat halaman pertama kali ready
+tampilkan semua chat pada grou pchat aktif
+
+ketika group chat diklik, pindahkan aktive ke group chat yang diklik
+ubah semua chat
+
+pada saat new chat, buat agar chat aktif terbaru berada diatas, dan namanya diambil dari chat pertama
+rename dan delete grou chat
+
+masukkan file referensi ke result chat
