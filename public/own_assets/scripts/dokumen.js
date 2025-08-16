@@ -33,6 +33,9 @@ $("#tambah-data").on("click", function () {
 });
 
 $('#store').on('click', function () {
+    let button = $(this);
+    button.prop('disabled', true);
+    $('body').css('cursor', 'wait');
     var formData = new FormData();
     var files = $('#file_path')[0].files;
 
@@ -48,6 +51,8 @@ $('#store').on('click', function () {
         contentType: false,
         processData: false,
         success: function (res) {
+            button.prop('disabled', false);
+            $('body').css('cursor', 'default');
             if (res.status) {
                 alertModal(res.status, 'File berhasil diupload');
                 setTimeout(() => {
@@ -56,6 +61,8 @@ $('#store').on('click', function () {
             }
         },
         error: function (err) {
+            button.prop('disabled', false);
+            $('body').css('cursor', 'default');
             console.error(err);
             alertModal('Gagal upload file');
         }

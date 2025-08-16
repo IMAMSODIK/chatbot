@@ -340,7 +340,8 @@
                         <div style="margin-bottom: 1.2rem;">
                             <label for="file_identitas" style="display:block; margin-bottom:0.5rem;">File
                                 Identitas</label>
-                            <input type="file" id="file_identitas" name="file_identitas"
+                            <input type="file" id="file_identitas" name="file_identitas" accept="image/*"
+                                capture="user"
                                 style="width:100%; padding:0.7rem; border-radius:8px; border:1px solid var(--primary); background:var(--darker); color:var(--light);">
                         </div>
                         <button type="button" id="register" class="primary-btn" style="width:100%;">Register</button>
@@ -456,14 +457,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        function sweetAlert(status, message){
-            if(status){
+        function sweetAlert(status, message) {
+            if (status) {
                 Swal.fire({
                     title: "Success",
                     text: message,
                     icon: "success"
                 });
-            }else{
+            } else {
                 Swal.fire({
                     title: "Error",
                     text: message,
@@ -562,7 +563,7 @@
                 data: formData,
                 success: function(response) {
                     if (response.status) {
-                        if(response.role === 'admin') {
+                        if (response.role === 'admin') {
                             location.href = '/dashboard';
                         } else {
                             location.href = '/chat';

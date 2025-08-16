@@ -289,7 +289,7 @@
                 Your trusted partner for effortless, intelligent regulatory compliance. Unlock the future of governance with Radar—where advanced AI streamlines your workflow, ensures accuracy, and empowers your business to stay ahead.
             </p>
             <div class="cta-buttons">
-                <button class="primary-btn">Get Started</button>
+                <button class="primary-btn" onclick="location.href = '/login'">Get Started</button>
             </div>
         </div>
         

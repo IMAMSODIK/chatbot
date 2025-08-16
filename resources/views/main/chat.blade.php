@@ -276,14 +276,14 @@
                                         <img src="{{ asset('chat_assets/img/user/user.jpg') }}" alt="">
                                     </div>
                                     <div class="user_info">
-                                        <h2 class="user_name">Caden Smith<span>Free</span></h2>
-                                        <p><a href="mailto:cadmail@gmail.com" class="user_email">cadmail@gmail.com</a>
+                                        <h2 class="user_name">{{auth()->user()->name}}<span></span></h2>
+                                        <p><a href="mailto:{{auth()->user()->email}}" class="user_email">{{auth()->user()->email}}</a>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="user_nav">
                                     <ul>
-                                        <li>
+                                        {{-- <li>
                                             <a href="user-profile.html">
                                                 <span class="icon"><img
                                                         src="{{ asset('chat_assets/svg/person.svg') }}"
@@ -306,7 +306,7 @@
                                                         alt="" class="fn__svg"></span>
                                                 <span class="text">Billing</span>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                             <a id="logout" style="cursor: pointer">
                                                 <span class="icon"><img
