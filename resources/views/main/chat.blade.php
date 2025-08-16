@@ -14,10 +14,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
-        .full_logo img,
+        /* .full_logo img,
         .short_logo img {
             filter: grayscale(100%) contrast(150%) brightness(110%);
-        }
+        } */
 
         input[type="file"] {
             margin: auto;
@@ -699,6 +699,45 @@
         // jika tidak, maka group chat akan dibuat pada saat mengirim pesan
         // pada saat klik new chat, kosongkan id group chat di html
         // pada saat klik kategori chat, kosongkan konten html dan isi dengan chats dari kategori dam isi grup id di html
+
+        $(document).on("click", ".fn__chat_link", function(e) {
+            e.preventDefault();
+
+            // 🔄 Pindahkan class active ke item yang diklik
+            $(".fn__chat_link").removeClass("active");
+            $(this).addClass("active");
+
+            let groupId = $(this).data("id");
+            $("#group-chat").val(groupId);
+
+            $(".chat__item.active").empty();
+
+            $.ajax({
+                url: '/chat/get-chats',
+                method: 'GET',
+                data: {
+                    group_id: groupId
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.status) {
+                        response.group_chat.chats.forEach(chat => {
+                            let bubbleChat = chat.is_user ?
+                                `<div class="chat__box your__chat"><div class="author"><span>You</span></div><div class="chat"><p>${chat.message}</p></div></div>` :
+                                `<div class="chat__box bot__chat"><div class="author"><span>Radar Bot</span></div><div class="chat">${chat.message}</div></div>`;
+
+                            $(".chat__item.active").append(bubbleChat);
+                        });
+                    } else {
+                        alert('Failed to load chats');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.statusText);
+                }
+            });
+        });
+
 
 
         $(document).ready(function() {

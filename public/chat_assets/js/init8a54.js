@@ -221,16 +221,48 @@ var FrenifyTechWaveTime = new Date;
 								var l = e(".fn__chatbot .chat__item").length;
 								e(".fn__chatbot .chat__list").append('<div class="chat__item active" id="chat' + l + '">' + i + "</div>");
 
-								var h = '<li class="group__item"><div class="fn__chat_link active" href="#chat' + l + '"><span class="text">Teset</span><input type="text" value="Teset"><span class="options"><button class="trigger"><span></span></button><span class="options__popup"><span class="options__list"><button class="edit">Edit</button><button class="delete">Delete</button></span></span></span><span class="save_options"><button class="save"><img src="svg/check.svg" alt="" class="fn__svg"></button><button class="cancel"><img src="svg/close.svg" alt="" class="fn__svg"></button></span></div></li>';
+								// ✅ Ambil text dari textarea
+								var rawText = '';
+								if($("#chat-option").val() == "Comply ISO 27001"){
+									rawText = "Comply ISO 27001";
+								}else if($("#chat-option").val() == "Comply ISO 20000"){
+									rawText = "Comply ISO 20000";
+								}else{
+									rawText = $("#fn__chat_textarea").val().trim();
+								}
+								var shortText = rawText.length > 23 ? rawText.substring(0, 23) + "..." : rawText;
+
+								var h = '<li class="group__item"><div class="fn__chat_link active" href="#chat' + l + '">' +
+									'<span class="text">' + shortText + '</span>' +
+									'<input type="text" value="' + shortText + '">' +
+									'<span class="options">' +
+									'<button class="trigger"><span></span></button>' +
+									'<span class="options__popup">' +
+									'<span class="options__list">' +
+									'<button class="edit">Edit</button>' +
+									'<button class="delete">Delete</button>' +
+									'</span>' +
+									'</span>' +
+									'</span>' +
+									'<span class="save_options">' +
+									'<button class="save"><img src="svg/check.svg" alt="" class="fn__svg"></button>' +
+									'<button class="cancel"><img src="svg/close.svg" alt="" class="fn__svg"></button>' +
+									'</span>' +
+									'</div></li>';
 
 								if (e(".fn__chatbot .chat__group.new").length) {
+									// ✅ Masukkan chat baru di paling atas
 									e(".fn__chatbot .chat__group.new ul").prepend(h);
 								} else {
-									e(".fn__chatbot .sidebar_content").prepend('<div class="chat__group new"><h2 class="group__title">Today</h2><ul class="group__list">' + h + "</ul></div>");
+									// kalau belum ada group sama sekali, buat baru di paling atas sidebar
+									e(".fn__chatbot .sidebar_content").prepend(
+										'<div class="chat__group new"><h2 class="group__title">Today</h2><ul class="group__list">' + h + "</ul></div>"
+									);
 								}
 
 								r.imgToSVG(), r.aiChatBotOptions();
 							}
+
 							else n.append(i);
 							return a.val(""), a.siblings(".fn__hidden_textarea").val(""), r.aiChatBotTextareaHeight(), e(".techwave_fn_intro").length ? e("html, body").animate({
 								scrollTop: a.offset().top - e(window).height() + 100

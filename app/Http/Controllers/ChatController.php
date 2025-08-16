@@ -254,6 +254,29 @@ EOT;
             $hasilJson = $response->json();
             $hasil = $hasilJson['candidates'][0]['content']['parts'][0]['text'] ?? 'Tidak ada jawaban';
 
+            if($request->group_chat) {
+                $groupChat = GroupChat::where('id', $request->group_chat)->first();
+            } else {
+                $groupChat = GroupChat::create([
+                    'user_id' => auth()->id(),
+                    'title' => 'Comply ISO 27001'
+                ]);
+            }
+            Chat::create([
+                'group_chat_id' => $groupChat->id,
+                'is_user' => true,
+                'is_system' => false,
+                'message' => 'Comply ISO 27001'
+            ]);
+
+            Chat::create([
+                'group_chat_id' => $groupChat->id,
+                'is_system' => true,
+                'is_user' => false,
+                'message' => $hasil ?: 'Tidak ada jawaban'
+            ]);
+            DB::commit();
+
             return response()->json([
                 'success' => true,
                 'chat' => $hasil
@@ -364,6 +387,32 @@ EOT;
                 'status' => true,
                 'kategori' => $kategori,
                 'latest_group_chat' => $latestGroupChat,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getChat(Request $request)
+    {
+        try {
+            $groupChat = GroupChat::where('id', $request->group_id)
+                ->with('chats')
+                ->first();
+
+            if (!$groupChat) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Group chat tidak ditemukan.'
+                ]);
+            }
+
+            return response()->json([
+                'status' => true,
+                'group_chat' => $groupChat
             ]);
         } catch (\Exception $e) {
             return response()->json([
