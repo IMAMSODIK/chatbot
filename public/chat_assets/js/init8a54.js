@@ -202,25 +202,8 @@ var FrenifyTechWaveTime = new Date;
 							processData: false,
 							data: formData,
 							success: function (response) {
-								// buat isi chat
-								let chatContent = response.chat;
-
-								// jika ada referensi, gabungkan jadi list
-								if (response.references && response.references.length > 0) {
-									let refsHtml = "<ul>";
-									response.references.forEach(function (ref) {
-										refsHtml += `<li>
-											<strong>${ref.title}</strong>, halaman ${ref.page_number || '-'}<br>
-											<a href="${ref.file_path}" target="_blank">Lihat Dokumen</a>
-										</li>`;
-									});
-									refsHtml += "</ul>";
-									chatContent += "<div class='chat-references'><h4>Referensi:</h4>" + refsHtml + "</div>";
-								}
-
-								// masukkan ke html
 								$("#group-chat").val(response.group_chat_id);
-								$(".fn__chatbot .chat__item.active .chat__box.bot__chat:last-child .chat").html(chatContent);
+								e(".fn__chatbot .chat__item.active .chat__box.bot__chat:last-child .chat").html(response.chat)
 							},
 							error: function (xhr, status, error) {
 								console.error("Error:", error);
@@ -240,11 +223,11 @@ var FrenifyTechWaveTime = new Date;
 
 								// ✅ Ambil text dari textarea
 								var rawText = '';
-								if ($("#chat-option").val() == "Comply ISO 27001") {
+								if($("#chat-option").val() == "Comply ISO 27001"){
 									rawText = "Comply ISO 27001";
-								} else if ($("#chat-option").val() == "Comply ISO 20000") {
+								}else if($("#chat-option").val() == "Comply ISO 20000"){
 									rawText = "Comply ISO 20000";
-								} else {
+								}else{
 									rawText = $("#fn__chat_textarea").val().trim();
 								}
 								var shortText = rawText.length > 23 ? rawText.substring(0, 23) + "..." : rawText;
