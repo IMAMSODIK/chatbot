@@ -65,7 +65,7 @@ class AuthController extends Controller
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:3',
                 'password_confirmation' => 'required|string|same:password',
-                'file_identitas' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+                'file_identitas' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5048',
             ]);
 
             if ($request->hasFile('file_identitas')) {
