@@ -211,7 +211,7 @@ var FrenifyTechWaveTime = new Date;
 									response.references.forEach(function (ref) {
 										refsHtml += `<li>
 											<strong>${ref.title}</strong>, halaman ${ref.page_number || '-'}<br>
-											<a href="${ref.file_path}" target="_blank">Lihat Dokumen</a>
+											<a href="../../storage/${ref.file_path}" target="_blank">Lihat Dokumen</a>
 										</li>`;
 									});
 									refsHtml += "</ul>";
