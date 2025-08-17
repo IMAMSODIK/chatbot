@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <meta name="description" content="TechWave">
-    <meta name="author" content="Frenify">
+    <meta name="author" content="Radar">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -602,14 +602,14 @@
                 <footer class="techwave_fn_footer">
                     <div class="techwave_fn_footer_content">
                         <div class="copyright">
-                            <p>2023© Frenify Team</p>
+                            <p>2025© Radar</p>
                         </div>
-                        <div class="menu_items">
+                        {{-- <div class="menu_items">
                             <ul>
                                 <li><a href="terms.html">Terms of Service</a></li>
                                 <li><a href="privacy.html">Privacy Policy</a></li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </footer>
                 <!-- !FOOTER (inside the content) -->
