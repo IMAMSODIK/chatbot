@@ -542,7 +542,7 @@
                                             style="display: none;" width="100%">
                                         <button id="generate-btn">
                                             <img src="{{ asset('chat_assets/svg/enter.svg') }}" alt=""
-                                                class="fn__svg"> Send
+                                                class="fn__svg">&nbsp;&nbsp;Send
                                         </button>
                                     </div>
                                 </div>
