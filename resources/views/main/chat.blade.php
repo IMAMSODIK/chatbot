@@ -539,10 +539,10 @@
                                         <textarea rows="1" class="fn__hidden_textarea" tabindex="-1"></textarea>
                                         <textarea rows="1" placeholder="Send a message..." id="fn__chat_textarea"></textarea>
                                         <input type="file" name="" id="input_file" accept="pdf"
-                                            style="display: none;">
+                                            style="display: none;" width="100%">
                                         <button id="generate-btn">
                                             <img src="{{ asset('chat_assets/svg/enter.svg') }}" alt=""
-                                                class="fn__svg">
+                                                class="fn__svg"> Send
                                         </button>
                                     </div>
                                 </div>
