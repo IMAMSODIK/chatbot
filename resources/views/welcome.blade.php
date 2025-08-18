@@ -271,7 +271,7 @@
         </div>
         <div class="logo">
             @auth
-                <a href="/dashboard" style="text-decoration: none" class="login-btn">Dashboard</a>
+                <a href="/chat" style="text-decoration: none" class="login-btn">Get Started</a>
             @else
                 <a href="/login" style="text-decoration: none" class="login-btn">Login</a>
             @endauth
