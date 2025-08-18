@@ -60,6 +60,8 @@ class ChatController extends Controller
                     'documents.file_path'
                 )
                 ->get();
+            
+            dd($pages);
 
             // 3️⃣ Hitung cosine similarity
             $scoredPages = $pages->map(function ($page) use ($queryEmbedding) {
