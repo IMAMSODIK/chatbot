@@ -270,7 +270,11 @@
             <img src="{{ asset('chat_assets/img/logo-desktop-full.png') }}" alt="" srcset="" width="100%">
         </div>
         <div class="logo">
-            <a href="/login" style="text-decoration: none" class="login-btn">Login</a>
+            @auth
+                <a href="/dashboard" style="text-decoration: none" class="login-btn">Dashboard</a>
+            @else
+                <a href="/login" style="text-decoration: none" class="login-btn">Login</a>
+            @endauth
         </div>
     </header>
     
