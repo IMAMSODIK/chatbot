@@ -46,7 +46,7 @@ class ChatController extends Controller
                 ]);
             }
 
-            // 2️⃣ Ambil document_pages + join ke documents
+            // 2️⃣ Ambil semua halaman dengan embedding
             $pages = DB::table('document_pages')
                 ->join('documents', 'document_pages.document_id', '=', 'documents.id')
                 ->whereNotNull('document_pages.embed')
@@ -69,11 +69,33 @@ class ChatController extends Controller
                 return $page;
             });
 
-            // 4️⃣ Ambil top 5 halaman
+            // 4️⃣ Ambil top 5 berdasarkan similarity
             $topPages = $scoredPages->sortByDesc('similarity')->take(5);
 
+            // 5️⃣ Fallback: kalau embedding tidak nemu hasil relevan
+            if ($topPages->isEmpty() || $topPages->max('similarity') < 0.2) {
+                $keywordPages = DB::table('document_pages')
+                    ->join('documents', 'document_pages.document_id', '=', 'documents.id')
+                    ->where('document_pages.page_text', 'LIKE', "%{$query}%")
+                    ->select(
+                        'document_pages.id',
+                        'document_pages.document_id',
+                        'document_pages.page_number',
+                        'document_pages.page_text',
+                        'documents.title',
+                        'documents.file_path'
+                    )
+                    ->take(5)
+                    ->get();
+
+                if ($keywordPages->isNotEmpty()) {
+                    $topPages = $keywordPages;
+                }
+            }
+
+            // 6️⃣ Kalau tetap kosong → langsung balikin "Tidak ada jawaban"
             if ($topPages->isEmpty()) {
-                if($request->group_chat) {
+                if ($request->group_chat) {
                     $groupChat = GroupChat::where('id', $request->group_chat)->first();
                 } else {
                     $groupChat = GroupChat::create([
@@ -81,6 +103,7 @@ class ChatController extends Controller
                         'title' => $query
                     ]);
                 }
+
                 Chat::create([
                     'group_chat_id' => $groupChat->id,
                     'is_user' => true,
@@ -94,7 +117,6 @@ class ChatController extends Controller
                     'is_user' => false,
                     'message' => 'Tidak ada jawaban'
                 ]);
-                DB::commit();
 
                 return response()->json([
                     'success' => true,
@@ -104,14 +126,14 @@ class ChatController extends Controller
                 ]);
             }
 
-            // 5️⃣ Gabungkan context
+            // 7️⃣ Gabungkan context dari halaman terpilih
             $context = "";
             foreach ($topPages as $p) {
                 $context .= "Dokumen: {$p->title}, Halaman: {$p->page_number}\n";
                 $context .= "{$p->page_text}\n\n";
             }
 
-            // 6️⃣ Prompt ke Gemini
+            // 8️⃣ Prompt ke Gemini
             $prompt = "Gunakan informasi berikut untuk menjawab pertanyaan.\n\n"
                 . "Context:\n$context\n\n"
                 . "Pertanyaan: $query\n\n"
@@ -120,7 +142,7 @@ class ChatController extends Controller
 
             $answer = $this->askGemini($prompt);
 
-            // 7️⃣ Filter referensi hanya yang muncul di jawaban
+            // 9️⃣ Filter referensi hanya yang disebut di jawaban
             $mentionedDocs = [];
             foreach ($topPages as $p) {
                 if (stripos($answer, $p->title) !== false) {
@@ -132,9 +154,10 @@ class ChatController extends Controller
                 }
             }
 
+            // 🔟 Simpan chat
             DB::beginTransaction();
             try {
-                if($request->group_chat) {
+                if ($request->group_chat) {
                     $groupChat = GroupChat::where('id', $request->group_chat)->first();
                 } else {
                     $groupChat = GroupChat::create([
@@ -142,6 +165,7 @@ class ChatController extends Controller
                         'title' => $query
                     ]);
                 }
+
                 Chat::create([
                     'group_chat_id' => $groupChat->id,
                     'is_user' => true,
@@ -155,6 +179,7 @@ class ChatController extends Controller
                     'is_user' => false,
                     'message' => $answer
                 ]);
+
                 DB::commit();
 
                 return response()->json([
@@ -254,7 +279,7 @@ EOT;
             $hasilJson = $response->json();
             $hasil = $hasilJson['candidates'][0]['content']['parts'][0]['text'] ?? 'Tidak ada jawaban';
 
-            if($request->group_chat) {
+            if ($request->group_chat) {
                 $groupChat = GroupChat::where('id', $request->group_chat)->first();
             } else {
                 $groupChat = GroupChat::create([

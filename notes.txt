@@ -274,3 +274,391 @@ pada saat new chat, buat agar chat aktif terbaru berada diatas, dan namanya diam
 rename dan delete grou chat
 
 masukkan file referensi ke result chat
+
+
+
+
+
+
+
+
+
+<div class="chat__box your__chat">
+    <div class="author"><span>You</span></div>
+    <div class="chat">
+        <p>jelaskan tentang tata kelola</p>
+    </div>
+</div>
+                                        
+chat:609 
+<div class="chat__box your__chat">
+    <div class="author"><span>You</span></div>
+    <div class="chat">
+        <p>jelaskan tentang tata kelola</p>
+    </div>
+</div>
+
+<div class="chat__box bot__chat">
+    <div class="author"><span>Radar Bot</span></div>
+    <div class="chat">
+        <p><p>Tata kelola teknologi informasi (TI) dijelaskan secara menyeluruh dalam dokumen "IT CORPORATE GOVERNANCE" dengan nomor dokumen 02/ITG/DU-DK/I/2018, revisi 3, yang mulai berlaku pada 06/07/2023.  Dokumen ini diklasifikasikan sebagai "Terbatas".</p>
+
+        <p><strong>Sistem Manajemen dan Kebijakan Tata Kelola TI:</strong>  Bab II (Sistem Manajemen dan Kebijakan Tata Kelola TI), halaman 15 dan 26, menjelaskan berbagai aspek tata kelola TI, termasuk:</p>
+        <ul>
+        <li><strong>Pengelolaan Risiko TI:</strong>  Menjelaskan tentang penyesuaian dengan pedoman manajemen risiko perusahaan, koordinasi dengan divisi terkait, pembuatan daftar risiko, prioritas risiko, dan pembaruan daftar risiko secara berkala (halaman 15).</li>
+        <li><strong>Pengelolaan Proyek TI:</strong>  Mencakup pengelolaan pengembangan dan pengadaan TI berskala besar melalui manajemen proyek, penyelarasan prioritas proyek dengan Rencana Jangka Panjang Perusahaan (RJPP), dokumentasi rencana proyek, persyaratan keamanan informasi, pengawasan manajemen proyek, dan koordinasi proyek paralel (halaman 15).</li>
+        <li><strong>Hubungan dengan Pihak Eksternal:</strong>  Menjelaskan tentang pengelolaan hubungan dengan pelanggan (misalnya Bank Indonesia), vendor, supplier, dan pihak ketiga lainnya, termasuk pemenuhan kontrak, kerahasiaan data, dan Service Level Agreement (SLA) (halaman 26).</li>
+        </ul>
+
+        <p><strong>Kebijakan Sistem Manajemen Pengamanan Informasi (SMPI):</strong> Bab III (Kebijakan SMPI), halaman 18, menyoroti aspek pengamanan informasi,  termasuk:</p>
+        <ul>
+        <li><strong>Pengelolaan Kabel dan Perangkat:</strong>  Menekankan pentingnya identifikasi, pelabelan, dan dokumentasi kabel, serta dokumentasi pemeliharaan perangkat dengan mengacu pada spesifikasi pemasok (halaman 18).</li>
+        <li><strong>Penghapusan Aplikasi dan Software:</strong>  Menjelaskan tentang penghapusan aplikasi dan software yang tidak terpakai dengan teknik yang menjamin ketidakmampuan penggunaannya lagi (halaman 18).</li>
+        <li><strong>Pengamanan Operasional:</strong>  Menjelaskan prosedur operasional TI, pembaruan prosedur, perlindungan terhadap malware, dan peningkatan kepedulian pengguna terhadap bahaya malware (halaman 18).</li>
+        </ul>
+
+        <p><strong>Kebijakan Penggunaan Aset TI:</strong> Bab V (Kebijakan Penggunaan Aset TI), halaman 7,  mencakup panduan penggunaan aset TI, termasuk:</p>
+        <ul>
+        <li><strong>Penggunaan Email:</strong>  Menjelaskan tanggung jawab pengguna email, larangan mengunduh lampiran mencurigakan, hak Divisi Teknologi Informasi untuk memblokir email, dan tanggung jawab atas pelanggaran kebijakan (halaman 7).</li>
+        <li><strong>Penggunaan Instant Messaging:</strong>  Menjelaskan bahwa penggunaan instant messaging merupakan tanggung jawab pribadi pengguna (halaman 7).</li>
+        </ul>
+
+        <p>Secara keseluruhan, dokumen ini memberikan kerangka kerja untuk tata kelola TI yang komprehensif, mencakup aspek manajemen risiko, manajemen proyek, pengamanan informasi, dan penggunaan aset TI.  Definisi berbagai istilah terkait TI seperti enkripsi, firewall, dan Disaster Recover Center (DRC) juga disediakan di Bab I, halaman 5.</p>
+        </p>
+        </div>
+    </div>
+                                        
+chat:609 
+    <div class="chat__box your__chat">
+        <div class="author"><span>You</span></div>
+        <div class="chat">
+            <p>jelaskan tentang tata kelola</p>
+        </div>
+    </div>
+
+    <div class="chat__box bot__chat">
+        <div class="author"><span>Radar Bot</span></div>
+        <div class="chat">
+            <p><p>Tata kelola teknologi informasi (TI) dijelaskan secara menyeluruh dalam dokumen "IT CORPORATE GOVERNANCE" dengan nomor dokumen 02/ITG/DU-DK/I/2018, revisi 3, yang mulai berlaku pada 06/07/2023.  Dokumen ini diklasifikasikan sebagai "Terbatas".</p>
+
+            <p><strong>Sistem Manajemen dan Kebijakan Tata Kelola TI:</strong>  Bab II (Sistem Manajemen dan Kebijakan Tata Kelola TI), halaman 15 dan 26, menjelaskan berbagai aspek tata kelola TI, termasuk:</p>
+            <ul>
+            <li><strong>Pengelolaan Risiko TI:</strong>  Menjelaskan tentang penyesuaian dengan pedoman manajemen risiko perusahaan, koordinasi dengan divisi terkait, pembuatan daftar risiko, prioritas risiko, dan pembaruan daftar risiko secara berkala (halaman 15).</li>
+            <li><strong>Pengelolaan Proyek TI:</strong>  Mencakup pengelolaan pengembangan dan pengadaan TI berskala besar melalui manajemen proyek, penyelarasan prioritas proyek dengan Rencana Jangka Panjang Perusahaan (RJPP), dokumentasi rencana proyek, persyaratan keamanan informasi, pengawasan manajemen proyek, dan koordinasi proyek paralel (halaman 15).</li>
+            <li><strong>Hubungan dengan Pihak Eksternal:</strong>  Menjelaskan tentang pengelolaan hubungan dengan pelanggan (misalnya Bank Indonesia), vendor, supplier, dan pihak ketiga lainnya, termasuk pemenuhan kontrak, kerahasiaan data, dan Service Level Agreement (SLA) (halaman 26).</li>
+            </ul>
+
+            <p><strong>Kebijakan Sistem Manajemen Pengamanan Informasi (SMPI):</strong> Bab III (Kebijakan SMPI), halaman 18, menyoroti aspek pengamanan informasi,  termasuk:</p>
+            <ul>
+            <li><strong>Pengelolaan Kabel dan Perangkat:</strong>  Menekankan pentingnya identifikasi, pelabelan, dan dokumentasi kabel, serta dokumentasi pemeliharaan perangkat dengan mengacu pada spesifikasi pemasok (halaman 18).</li>
+            <li><strong>Penghapusan Aplikasi dan Software:</strong>  Menjelaskan tentang penghapusan aplikasi dan software yang tidak terpakai dengan teknik yang menjamin ketidakmampuan penggunaannya lagi (halaman 18).</li>
+            <li><strong>Pengamanan Operasional:</strong>  Menjelaskan prosedur operasional TI, pembaruan prosedur, perlindungan terhadap malware, dan peningkatan kepedulian pengguna terhadap bahaya malware (halaman 18).</li>
+            </ul>
+
+            <p><strong>Kebijakan Penggunaan Aset TI:</strong> Bab V (Kebijakan Penggunaan Aset TI), halaman 7,  mencakup panduan penggunaan aset TI, termasuk:</p>
+            <ul>
+            <li><strong>Penggunaan Email:</strong>  Menjelaskan tanggung jawab pengguna email, larangan mengunduh lampiran mencurigakan, hak Divisi Teknologi Informasi untuk memblokir email, dan tanggung jawab atas pelanggaran kebijakan (halaman 7).</li>
+            <li><strong>Penggunaan Instant Messaging:</strong>  Menjelaskan bahwa penggunaan instant messaging merupakan tanggung jawab pribadi pengguna (halaman 7).</li>
+            </ul>
+
+            <p>Secara keseluruhan, dokumen ini memberikan kerangka kerja untuk tata kelola TI yang komprehensif, mencakup aspek manajemen risiko, manajemen proyek, pengamanan informasi, dan penggunaan aset TI.  Definisi berbagai istilah terkait TI seperti enkripsi, firewall, dan Disaster Recover Center (DRC) juga disediakan di Bab I, halaman 5.</p>
+            </p>
+        </div>
+    </div>
+
+    <div class="chat__box your__chat">
+        <div class="author"><span>You</span></div>
+        <div class="chat">
+            <p>tata kelola</p>
+        </div>
+    </div>
+                                        
+    <div class="chat__box your__chat">
+        <div class="author"><span>You</span></div>
+        <div class="chat">
+            <p>jelaskan tentang tata kelola</p>
+        </div>
+    </div>
+
+    <div class="chat__box bot__chat">
+        <div class="author"><span>Radar Bot</span></div>
+        <div class="chat">
+            <p><p>Tata kelola teknologi informasi (TI) dijelaskan secara menyeluruh dalam dokumen "IT CORPORATE GOVERNANCE" dengan nomor dokumen 02/ITG/DU-DK/I/2018, revisi 3, yang mulai berlaku pada 06/07/2023.  Dokumen ini diklasifikasikan sebagai "Terbatas".</p>
+
+            <p><strong>Sistem Manajemen dan Kebijakan Tata Kelola TI:</strong>  Bab II (Sistem Manajemen dan Kebijakan Tata Kelola TI), halaman 15 dan 26, menjelaskan berbagai aspek tata kelola TI, termasuk:</p>
+            <ul>
+            <li><strong>Pengelolaan Risiko TI:</strong>  Menjelaskan tentang penyesuaian dengan pedoman manajemen risiko perusahaan, koordinasi dengan divisi terkait, pembuatan daftar risiko, prioritas risiko, dan pembaruan daftar risiko secara berkala (halaman 15).</li>
+            <li><strong>Pengelolaan Proyek TI:</strong>  Mencakup pengelolaan pengembangan dan pengadaan TI berskala besar melalui manajemen proyek, penyelarasan prioritas proyek dengan Rencana Jangka Panjang Perusahaan (RJPP), dokumentasi rencana proyek, persyaratan keamanan informasi, pengawasan manajemen proyek, dan koordinasi proyek paralel (halaman 15).</li>
+            <li><strong>Hubungan dengan Pihak Eksternal:</strong>  Menjelaskan tentang pengelolaan hubungan dengan pelanggan (misalnya Bank Indonesia), vendor, supplier, dan pihak ketiga lainnya, termasuk pemenuhan kontrak, kerahasiaan data, dan Service Level Agreement (SLA) (halaman 26).</li>
+            </ul>
+
+            <p><strong>Kebijakan Sistem Manajemen Pengamanan Informasi (SMPI):</strong> Bab III (Kebijakan SMPI), halaman 18, menyoroti aspek pengamanan informasi,  termasuk:</p>
+            <ul>
+            <li><strong>Pengelolaan Kabel dan Perangkat:</strong>  Menekankan pentingnya identifikasi, pelabelan, dan dokumentasi kabel, serta dokumentasi pemeliharaan perangkat dengan mengacu pada spesifikasi pemasok (halaman 18).</li>
+            <li><strong>Penghapusan Aplikasi dan Software:</strong>  Menjelaskan tentang penghapusan aplikasi dan software yang tidak terpakai dengan teknik yang menjamin ketidakmampuan penggunaannya lagi (halaman 18).</li>
+            <li><strong>Pengamanan Operasional:</strong>  Menjelaskan prosedur operasional TI, pembaruan prosedur, perlindungan terhadap malware, dan peningkatan kepedulian pengguna terhadap bahaya malware (halaman 18).</li>
+            </ul>
+
+            <p><strong>Kebijakan Penggunaan Aset TI:</strong> Bab V (Kebijakan Penggunaan Aset TI), halaman 7,  mencakup panduan penggunaan aset TI, termasuk:</p>
+            <ul>
+            <li><strong>Penggunaan Email:</strong>  Menjelaskan tanggung jawab pengguna email, larangan mengunduh lampiran mencurigakan, hak Divisi Teknologi Informasi untuk memblokir email, dan tanggung jawab atas pelanggaran kebijakan (halaman 7).</li>
+            <li><strong>Penggunaan Instant Messaging:</strong>  Menjelaskan bahwa penggunaan instant messaging merupakan tanggung jawab pribadi pengguna (halaman 7).</li>
+            </ul>
+
+            <p>Secara keseluruhan, dokumen ini memberikan kerangka kerja untuk tata kelola TI yang komprehensif, mencakup aspek manajemen risiko, manajemen proyek, pengamanan informasi, dan penggunaan aset TI.  Definisi berbagai istilah terkait TI seperti enkripsi, firewall, dan Disaster Recover Center (DRC) juga disediakan di Bab I, halaman 5.</p>
+            </p>
+        </div>
+    </div>
+
+    <div class="chat__box your__chat">
+        <div class="author"><span>You</span></div>
+        <div class="chat">
+            <p>tata kelola</p>
+        </div>
+    </div>
+
+    <div class="chat__box bot__chat">
+        <div class="author"><span>Radar Bot</span></div>
+        <div class="chat">
+            <p><p>Tata kelola IT dijelaskan secara menyeluruh dalam dokumen <strong>IT CORPORATE GOVERNANCE, No. Dokumen : 02/ITG/DU-DK/I/2018</strong>.  Rinciannya tersebar di beberapa halaman:</p>
+
+<ul>
+<li><strong>Halaman 4 dan 5:</strong>  Pendahuluan memberikan gambaran umum mengenai tata kelola IT, termasuk definisi istilah kunci seperti <i>Business Process Owner</i>, <i>Cloud Computing</i> (dengan jenis-jenisnya: <i>Private, Public, Hybrid</i>), berbagai jenis <i>Data Pribadi</i>, <i>Daftar Risiko (Risk Register)</i>, <i>Disaster Recover Center (DRC)</i>, <i>Enkripsi</i>, <i>Firewall</i>, dan <i>Hak Cipta/Hak Kekayaan Intelektual</i>. Halaman ini membangun dasar pemahaman tentang kerangka kerja tata kelola yang diterapkan.</li>
+<li><strong>Halaman 17 dan 18:</strong>  Bagian <strong>Kebijakan Sistem Manajemen Pengamanan Informasi (SMPI)</strong>  menjelaskan aspek-aspek keamanan dan pengamanan aset TI, termasuk pengaturan akses, pengamanan fisik perangkat TI, prosedur pemeliharaan, dan perlindungan terhadap <i>malware</i>. Ini menunjukkan bagaimana tata kelola diterjemahkan ke dalam praktik operasional.</li>
+<li><strong>Halaman 7:</strong>  <strong>Kebijakan Penggunaan Aset Teknologi Informasi</strong> memberikan panduan penggunaan aset TI oleh karyawan, termasuk penggunaan email dan <i>instant messaging</i>, serta tanggung jawab dan konsekuensi atas pelanggaran kebijakan. Ini menunjukan aspek tata kelola yang terkait dengan perilaku pengguna dan tanggung jawab.</li>
+</ul>
+
+<p>Secara keseluruhan, dokumen tersebut memberikan gambaran tentang kebijakan dan prosedur yang membentuk tata kelola IT di perusahaan, mulai dari definisi konseptual hingga implementasi operasional dan tanggung jawab pengguna.</p>
+</p>
+                                                </div>
+                                            </div>
+
+
+
+
+
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	1/16 
+ 	Klasifikasi Terbatas 
+BAB IV 
+ 
+KEBIJAKAN PELINDUNGAN DATA PRIBADI 
+ 
+ 
+1. Latar Belakang 
+Data pribadi, baik data karyawan maupun data non karyawan yang karena alasan atau tujuan tertentu 
+dikumpulkan perusahaan secara langsung maupun tidak langsung melalui sistem elektronik atau 
+nonelektronik merupakan aset penting yang harus dilindungi kerahasiaannya. Pemrosesan data 
+pribadi tersebut yang mencakup pemerolehan dan pengumpulan, pengolahan dan penganalisisan, 
+penyimpanan, perbaikan dan pembaruan, penampilan, pengumuman, transfer, penyebarluasan, 
+pengungkapan, dan/atau penghapusan atau pemusnahan harus dilakukan sesuai dengan prinsip 
+pelindungan data pribadi dan ada dasar pemrosesan data pribadi. 
+Sebagai pengendali dan pengelola data pribadi, Peruri memiliki komitmen untuk melindungi data 
+pribadi termasuk keamanannya dan melindungi hak-hak pemilik data pribadi serta terus menerus 
+meningkatkan kemampuannya dalam mematuhi peraturan perundangan yang berlaku.  
+Komitmen pelindungan data pribadi Peruri dituangkan dalam bentuk Kebijakan Pelindungan Data 
+Pribadi.  
+ 
+2. Tujuan 
+1. Memandu karyawan Peruri dalam melindungi data pribadi karyawan dan non karyawan yang 
+mencakup perolehan dan pengumpulan, pengolahan dan penganalisisan, penyimpanan, 
+penampilan, pengumuman, pengalihan, penyebarluasan atau pengungkapan data pribadi, 
+perbaikan dan pembaruan, serta penghapusan atau pemusnahan data pribadi. 
+2. Memastikan agar pengelolaan data pribadi di lingkungan Peruri mematuhi peraturan perundang-
+undangan yang berlaku.
+
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	2/16 
+ 	Klasifikasi Terbatas 
+ 
+3. Ruang Lingkup 
+Kebebijakan ini berlaku untuk: 
+1. Data pribadi setiap individu karyawan maupun non karyawan (pihak eksternal) yang teridentifikasi 
+atau dapat diidentifikasi secara tersendiri atau dikombinasi dengan informasi lainnya baik secara 
+langsung maupun tidak langsung melalui sistem elektronik atau nonelektronik. 
+2. Data pribadi yang dilindungi dapat berupa data digital (elektronik) atau non-digital (manual). 
+ 
+4. Definisi 
+1. Data pribadi adalah setiap data tentang seseorang baik yang teridentifikasi dan/atau dapat 
+diidentifikasi secara tersendiri atau dikombinasi dengan informasi lainnya baik secara langsung 
+maupun tidak langsung melalui sistem elektronik dan/atau non-elektronik (secara manual). Data 
+Pribadi dapat dikategori menjadi dua yakni Data Pribadi Umum dan Data Pribadi Spesifik. 
+2. Data Pribadi Umum merupakan yang mengidentifikasi seseorang secara umum meliputi antara 
+lain: 
+a. Nama Lengkap 
+b. Alamat 
+c. Jenis Kelamin 
+d. Kewarganegaraan 
+e. Agama 
+f. Nomor telepon 
+g. Email 
+h. Data Pribadi yang dikombinasikan untuk mengidentifikasi seseorang seperti data keluarga 
+yang bersifat umum
+
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	3/16 
+ 	Klasifikasi Terbatas 
+3. Data Pribadi Spesifik merupakan data pribadi yang bersifat sensitif terhadap keamanan dan 
+kenyamanan pemilik data pribadi. Data Pribadi Spesifik yang dicakup dalam kebijakan ini meliputi 
+antara lain: 
+a. Data Kesehatan (Fisik, Mental) 
+b. Data Biometrik 
+c. Data Genetika 
+d. Catatan Kejahatan 
+e. Data Anak 
+f. Data keuangan pribadi; dan/atau  
+g. Data yang dikumpulkan dan dikelola unit kerja SDM untuk keperluan administrasi 
+kepegawaian seperti catatan kehadiran, cuti, tunjangan tanggungan keluarga, data kinerja 
+karyawan, dan data gaji  
+h. Data spesifik lainnya sesuai dengan ketentuan peraturan perundang-undangan  
+4. Pemilik data pribadi adalah orang perseorangan selaku subyek data yang memiliki data pribadi 
+yang melekat pada dirinya. 
+5. Pelanggaran data pribadi berarti pelanggaran keamanan baik disengaja maupun tidak disengaja, 
+yang mengarah pada perusakan, penghancuran, kehilangan, perubahan, pengungkapan yang 
+tidak sah, atau akses tidak sah ke data pribadi yang dikirimkan, disimpan, atau diproses. 
+6. Petugas Pelindungan Data / Data Protection Officer (DPO) adalah Petugas yang bekerja secara 
+independen dan bertanggung jawab untuk melaksanakan fungsi Pelindungan Data Pribadi serta 
+memastikan bahwa perusahaan mematuhi persyaratan perundangan tentang data pribadi.  
+7. Pejabat Pelindungan Data Pribadi / Chief Privacy Officer (CPO) adalah Pejabat yang bertanggung 
+jawab untuk mengembangkan dan menerapkan kebijakan pelindungan data pribadi karyawan dan 
+pelanggan dari akses secara tidak sah, serta memastikan bahwa perusahaan persyaratan 
+perundangan tentang data pribadi. 
+8. Retensi adalah lamanya waktu suatu rekaman harus disimpan sebelum dapat dihancurkan atau 
+dimusnahkan.  
+Contoh:
+
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	4/16 
+ 	Klasifikasi Terbatas 
+a. Jika retensi 5 (lima) tahun maka rekaman insiden yang dibuat tanggal 31 Maret 2020, periode 
+retensinya mulai dari 1 April 2020 dan akan berakhir 5 tahun kemudian yakni 1 April 2025. 
+b. Jika data pribadi sistem elektronik mulai disimpan saat pengguna pertama kali mendaftar 
+tanggal 30 April 2019, dan pengguna berhenti menggunakan sistem elektronik 31 Maret 2020, 
+maka retensi 5 tahun dihitung dari saat pengguna berhenti menggunakan sistem elektronik. 
+5. Peran dan Tanggung Jawab  
+1. Karyawan secara umum  
+a. Membaca, memahami, dan mematuhi kebijakan ini. 
+b. Melaporkan segera jika mengetahui adanya dugaan pelanggaran data pribadi. 
+2. Karyawan yang memiliki akses ke data pribadi: 
+a. Membaca, memahami, dan mematuhi kebijakan ini 
+b. Hanya mengakses data pribadi sesuai kewenangannya dan hanya untuk tujuan tertentu yang 
+sah seusai peraturan perundangan yang berlaku; 
+c. Tidak mengungkapkan data pribadi kepada pihak lain, baik di dalam atau di luar perusahaan, 
+kecuali yang dibenarkan peraturan perundangan yang berlaku; 
+d. Menjaga keamanan data pribadi dengan menerapkan kontrol-kontrol keamanan yang 
+ditetapkan perusahaan; 
+e. Tidak menghapus/menghancurkan data pribadi atau perangkat yang digunakan untuk 
+menyimpan data pribadi tanpa kewenangan; 
+f. Melaporkan dengan segera jika mengetahui adanya dugaan insiden, kegagalan pelindungan 
+atau pelanggaran data pribadi 
+3. Kepala Unit Kerja/Departemen: 
+a. Memastikan staf dan pihak ketiga yang memberikan dukungan terhadap unit kerjanya 
+memahami prinsip-prinsip pengamanan dan pelindungan data pribadi. 
+b. Melakukan penilaian risiko dan langkah-langkah untuk memitigasi risiko terkait data pribadi. 
+4. Kepala Divisi TI:
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	5/16 
+ 	Klasifikasi Terbatas 
+a. Merencananakan pelindungan data pribadi sebagai bagian dari program keamanan informasi 
+b. Memastikan dokumen kontrak vendor, konsultan, dan pihak ketiga lainnya yang melakukan 
+akses atau memproses data pribadi telah mencantumkan persyaratan pelindungan data 
+pribadi 
+c. Menjamin kebijakan pelindungan data pribadi terintegrasi dengan kebijakan sistem 
+manajemen pengamanan informasi perusahaan.  
+d. Memantau dan mengevaluasi efektivitas kebijakan pelindungan data pribadi. 
+5. Petugas Pelindungan Data / Data Protection Officer (DPO): 
+a. Meningkatkan kesadaran karyawan tentang pelindungan data pribadi, melalui sosialisasi dan 
+pelatihan  
+b. Memantau, mengendalikan dan mengawasi kepatuhan Peruri terhadap peraturan perundang-
+undangan tentang pelindungan data pribadi. 
+c. Memberikan masukan tentang penilaian risiko terkait pemrosesan data pribadi 
+d. Mengelola aktivitas perlindungan data, memprioritaskan aktivitas berdasarkan risiko atau 
+potensi dampak. 
+e. Memberikan panduan kepada karyawan tentang prosedur yang harus diikuti jika terjadi 
+pelanggaran, keluhan, dan permintaan akses data pribadi baik dari karyawan maupun dari 
+pihak eksternal. 
+f. Memantau kinerja pelindungan data pribadi di perusahaan dan prosesor data pribadi;  
+g. Memelihara catatan penilaian risiko dan audit kepatuhan. 
+ 
+6. Pejabat Pelindungan Data Pribadi / Chief Privacy Officer (CPO)
+
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	6/16 
+ 	Klasifikasi Terbatas 
+a. Mengikuti perkembangan terbaru tentang pelindungan data pribadi. 
+b. Memberi masukan kepada Direksi tentang langkah-langkah pelindungan data pribadi sesuai 
+peraturan perundangan yang berlaku; 
+c. Memastikan kepatuhan Peruri terhadap peraturan perundang-undangan tentang pelindungan 
+data pribadi. 
+d. Memandu perumusan kebijakan, proses, tata kelola, dan kepatuhan tentang pelindungan data 
+pribadi. 
+e. Mendorong kesadaran terhadap pelindungan data pribadi di dalam perusahaan. 
+f. Berkoordinasi dengan regulator/lembaga eksternal yang berwenang dan bertindak sebagai 
+narahubung untuk masalah yang berkaitan dengan pelindungan data pribadi. 
+g. Berhubungan dengan media terkait dengan masalah pelindungan data pribadi.
