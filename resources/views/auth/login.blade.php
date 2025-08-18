@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroAI - Future Intelligence Platform</title>
+    <title>Radar - Your Trusted Intelligence Partner</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Rajdhani:wght@500;700&display=swap"
         rel="stylesheet">
@@ -57,9 +57,8 @@
         }
 
         .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 200px;
+            height: 100px;
             border-radius: 8px;
             display: grid;
             place-items: center;
@@ -275,11 +274,8 @@
     <!-- Fixed Header -->
     <header class="header">
         <div class="logo-icon" onclick="location.href='/'">
-            <svg viewBox="0 0 24 24">
-                <path d="M12,2L1,12L4,12L4,21L10,21L10,15L14,15L14,21L20,21L20,12L23,12L12,2Z" />
-            </svg>
+            <img src="{{ asset('chat_assets/img/logo-desktop-full.png') }}" alt="" srcset="" width="100%">
         </div>
-        <span class="logo-text" onclick="location.href='/'">Radar</span>
     </header>
 
     <!-- Hero Section -->

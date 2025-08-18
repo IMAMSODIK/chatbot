@@ -54,9 +54,8 @@
         }
         
         .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 200px;
+            height: 100px;
             border-radius: 8px;
             display: grid;
             place-items: center;
@@ -268,11 +267,8 @@
     <!-- Fixed Header -->
     <header class="header">
         <div class="logo-icon">
-            <svg viewBox="0 0 24 24">
-                <path d="M12,2L1,12L4,12L4,21L10,21L10,15L14,15L14,21L20,21L20,12L23,12L12,2Z"/>
-            </svg>
+            <img src="{{ asset('chat_assets/img/logo-desktop-full.png') }}" alt="" srcset="" width="100%">
         </div>
-        <span class="logo-text">Radar</span>
         <div class="logo">
             <a href="/login" style="text-decoration: none" class="login-btn">Login</a>
         </div>

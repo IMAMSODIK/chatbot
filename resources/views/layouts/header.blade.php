@@ -16,8 +16,8 @@
         </form>
         <div class="header-logo-wrapper col-auto p-0">
             <div class="logo-wrapper"> <a href="index.html"><img class="img-fluid for-light"
-                        src="{{ asset('dashboard_assets/assets/images/logo/logo_dark.png') }}" alt="logo-light"><img
-                        class="img-fluid for-dark" src="{{ asset('dashboard_assets/assets/images/logo/logo.png') }}"
+                        src="{{ asset('chat_assets/img/logo-desktop-full.png') }}" alt="logo-light"><img
+                        class="img-fluid for-dark" src="{{ asset('chat_assets/img/logo-desktop-full.png') }}"
                         alt="logo-dark"></a></div>
             <div class="toggle-sidebar"> <i class="status_toggle middle sidebar-toggle"
                     data-feather="align-center"></i></div>
@@ -456,7 +456,7 @@
                     <div class="user-nav onhover-dropdown">
                         <div class="user-name media">
                             <div class="user"><img class="img-fluid rounded-circle"
-                                    src="{{ asset('dashboard_assets/assets/  images/dashboard/user.png') }}" alt="">
+                                    src="{{ asset('dashboard_assets/assets/images/dashboard/user.png') }}" alt="">
                                 <ul class="profile-dropdown onhover-show-div p-20">
                                     <li><a href="/profile"><i
                                                 data-feather="user"></i>Profile</a></li>

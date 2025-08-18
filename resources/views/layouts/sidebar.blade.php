@@ -2,7 +2,7 @@
 
     <div class="logo-wrapper">
         <a href="/dashboard">
-            <img class="img-fluid" width="40px" src="{{ asset('landing_assets/images/logo-light.png') }}" alt=""
+            <img class="img-fluid" width="40px" src="{{ asset('chat_assets/img/logo-desktop-full.png') }}" alt=""
                 style="width: 80px">
         </a>
         <div class="back-btn">
@@ -16,7 +16,7 @@
 
     <div class="logo-icon-wrapper">
         <a href="index.html">
-            <img class="img-fluid" src="{{ asset('landing_assets/images/logo-light.png') }}" alt="">
+            <img class="img-fluid" src="{{ asset('chat_assets/img/logo-desktop-full.png') }}" alt="">
         </a>
     </div>
 
@@ -27,7 +27,7 @@
 
                 <li class="back-btn">
                     <a href="index.html">
-                        <img class="img-fluid" src="{{ asset('landing_assets/images/logo-light.png') }}" alt="">
+                        <img class="img-fluid" src="{{ asset('chat_assets/img/logo-desktop-full.png') }}" alt="">
                     </a>
                     <div class="mobile-back text-end">
                         <span>Back </span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i>
