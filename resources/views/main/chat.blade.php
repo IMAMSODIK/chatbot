@@ -826,7 +826,9 @@
 
         $(document).on("click", ".options", function(e) {
             e.stopPropagation();
-            alert('test');
+
+            var t = $(this).closest(".fn__chat_link");
+            return t.hasClass("opened") ? t.removeClass("opened") : t.addClass("opened")
         });
     </script>
 </body>
