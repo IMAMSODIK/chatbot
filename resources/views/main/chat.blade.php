@@ -147,7 +147,6 @@
             <h3 class="title">Are you sure?</h3>
             <input type="hidden" name="" id="chat-id2">
             <label for="chat-delete">are you sure to delete this chats?</label>
-            <a class="font__closer techwave_fn_button"><span>Cancel</span></a>
             <a class="apply techwave_fn_button"><span>Delete</span></a>
         </div>
     </div>
