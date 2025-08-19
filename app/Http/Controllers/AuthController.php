@@ -14,7 +14,7 @@ class AuthController extends Controller
                 'password' => 'required',
             ]);
 
-            // Cek user di database
+            // Cari user berdasarkan email
             $user = \App\Models\User::where('email', $credentials['email'])->first();
 
             if (!$user) {
@@ -24,18 +24,20 @@ class AuthController extends Controller
                 ]);
             }
 
+            // Cek status user (aktif atau belum verifikasi)
             if ($user->status != 1) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Akun Anda belum aktif.'
+                    'message' => 'Akun Anda belum diverifikasi. Silakan cek email atau hubungi admin.'
                 ]);
             }
 
-            // Proses login
+            // Proses login (hanya jika status = 1)
             if (auth()->attempt($credentials)) {
                 return response()->json([
                     'status' => true,
                     'role' => $user->role,
+                    'message' => 'Login berhasil.'
                 ]);
             }
 
@@ -80,7 +82,7 @@ class AuthController extends Controller
 
             $user = \App\Models\User::create($data);
 
-            auth()->login($user);
+            // auth()->login($user);
 
             return response()->json([
                 'status' => true,

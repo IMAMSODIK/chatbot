@@ -517,11 +517,11 @@
                 data: formData,
                 success: function(response) {
                     if (response.status) {
-                        sweetAlert(true, "Registrasi berhasil");
+                        sweetAlert(true, "Registrasi berhasil, silahkan tunggu verifikasi admin");
 
                         setTimeout(() => {
-                            location.reload();
-                        }, 2000);
+                            location.href = '/login';
+                        }, 1000);
                     } else {
                         sweetAlert(false, response.message);
                     }
