@@ -207,18 +207,38 @@ var FrenifyTechWaveTime = new Date;
 
 								// jika ada referensi, gabungkan jadi list
 								if (response.references && response.references.length > 0) {
-									let refsHtml = "<ul>";
+									// Kelompokkan berdasarkan title
+									let groupedRefs = {};
+
 									response.references.forEach(function (ref) {
+										if (!groupedRefs[ref.title]) {
+											groupedRefs[ref.title] = {
+												pages: [],
+												file_path: ref.file_path
+											};
+										}
+										groupedRefs[ref.title].pages.push(ref.page_number);
+									});
+
+									// Buat HTML
+									let refsHtml = "<ul>";
+									Object.keys(groupedRefs).forEach(function (title) {
+										let data = groupedRefs[title];
+										// Sort halaman biar rapi
+										let uniquePages = [...new Set(data.pages)].sort((a, b) => a - b);
+										let pagesText = uniquePages.join(", ");
+
 										refsHtml += `<li>
-											<strong>${ref.title}</strong>, halaman ${ref.page_number || '-'}<br>
-											<a href="../../storage/${ref.file_path}" target="_blank">Lihat Dokumen</a>
-										</li>`;
+            <strong>${title}</strong>, halaman ${pagesText}<br>
+            <a href="../../storage/${data.file_path}" target="_blank">Lihat Dokumen</a>
+        </li>`;
 									});
 									refsHtml += "</ul>";
 
 									// tambahkan ke chat
 									chatContent += "<div class='chat-references'><h4>Referensi:</h4>" + refsHtml + "</div>";
 								}
+
 
 								// masukkan ke html
 								$("#group-chat").val(response.group_chat_id);
