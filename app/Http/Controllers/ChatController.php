@@ -15,6 +15,60 @@ use Smalot\PdfParser\Parser;
 
 class ChatController extends Controller
 {
+    private function formatGeminiResponse(string $rawAnswer): string
+    {
+        // Bersihkan block code dari Gemini (```html ... ```)
+        $clean = preg_replace('/```(?:html)?|```/', '', $rawAnswer);
+        $clean = trim($clean);
+
+        // Jika jawaban sudah HTML rapi (ada <ul> / <li>), langsung return
+        if (strpos($clean, '<ul>') !== false || strpos($clean, '<li>') !== false) {
+            return $clean;
+        }
+
+        // Pisahkan per baris
+        $lines = preg_split('/\r\n|\r|\n/', $clean);
+
+        $grouped = [];
+        $currentKey = null;
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '') continue;
+
+            // Cek apakah baris mengandung "Dokumen xxx halaman y"
+            if (preg_match('/Dokumen (.+?) halaman (\d+)/i', $line, $matches)) {
+                $currentKey = "Dokumen {$matches[1]} halaman {$matches[2]}";
+
+                // Jika key belum ada, buat baru
+                if (!isset($grouped[$currentKey])) {
+                    $grouped[$currentKey] = [];
+                }
+
+                // Ambil sisa teks setelah pola (jika ada) → jadikan poin
+                $remaining = trim(str_replace($matches[0], '', $line));
+                if ($remaining !== '') {
+                    $grouped[$currentKey][] = $remaining;
+                }
+            } elseif ($currentKey !== null) {
+                // Kalau bukan header tapi bagian dari poin dokumen aktif
+                $grouped[$currentKey][] = $line;
+            }
+        }
+
+        // Konversi ke HTML
+        $html = '';
+        foreach ($grouped as $doc => $points) {
+            $html .= "<p><strong>$doc</strong></p><ul>";
+            foreach ($points as $p) {
+                $html .= '<li>' . e($p) . '</li>';
+            }
+            $html .= '</ul>';
+        }
+
+        return $html !== '' ? $html : nl2br(e($clean));
+    }
+
     public function index(Request $r)
     {
         $data = [
