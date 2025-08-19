@@ -690,8 +690,9 @@
 
         $(document).on("click", ".edit", function(e) {
             e.stopPropagation();
+            alert('test');
 
-            rn.addClass("opened");
+            // rn.addClass("opened");
 
             // var t = $(this).closest(".fn__chat_link");
             // return t.hasClass("opened") ? t.removeClass("opened") : t.addClass("opened")
