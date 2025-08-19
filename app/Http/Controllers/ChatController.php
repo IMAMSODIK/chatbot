@@ -579,12 +579,12 @@ EOT;
         try {
             $kategori = GroupChat::where('user_id', auth()->id())
                 ->with('chats')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'asc')
                 ->get();
 
             $latestGroupChat = GroupChat::where('user_id', auth()->id())
                 ->with('chats')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'asc')
                 ->first();
 
             return response()->json([
