@@ -495,7 +495,8 @@ var FrenifyTechWaveTime = new Date;
 					return t.removeClass("live_edit"), n = a.val(), t.find(".text").text(n), !1
 				}), e(window).on("click", function () {
 					e(".fn__chat_link").removeClass("opened")
-				}), e(document).on('click', ".fn__chat_link .options__popup", function (e) {
+				}), e(document).on('click', ".options__popup", function (e) {
+					alert('test');
 					e.stopPropagation();
 				}),
 				// e(".fn__chat_link .options__popup").on("click", function (e) {
