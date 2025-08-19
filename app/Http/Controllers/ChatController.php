@@ -89,6 +89,47 @@ class ChatController extends Controller
                 ]);
             }
 
+            // === Buat Dictionary Dinamis dari semua dokumen ===
+            $allTexts = \DB::table('document_pages')->pluck('content')->implode(' ');
+            $allWords = preg_split('/[\s,.\-:;()]+/', mb_strtolower($allTexts, 'UTF-8'));
+            $allWords = array_unique(array_filter($allWords));
+
+            // Tambahkan juga kata penting secara manual
+            $extraWords = ['pribadi', 'privasi', 'password', 'sandi', 'credential', 'login', 'pegawai', 'aset'];
+            $dictionary = array_unique(array_merge($allWords, $extraWords));
+
+            // === Normalisasi Typo ===
+            $words = explode(' ', $query);
+            $normalizedWords = [];
+
+            foreach ($words as $word) {
+                $closest = $word;
+                $shortest = -1;
+
+                foreach ($dictionary as $dictWord) {
+                    $lev = levenshtein(mb_strtolower($word, 'UTF-8'), $dictWord);
+                    if ($lev == 0) {
+                        $closest = $dictWord;
+                        $shortest = 0;
+                        break;
+                    }
+                    if ($lev <= $shortest || $shortest < 0) {
+                        $closest = $dictWord;
+                        $shortest = $lev;
+                    }
+                }
+
+                // kalau typo <= 2 huruf → ganti
+                if ($shortest > 0 && $shortest <= 2) {
+                    $normalizedWords[] = $closest;
+                } else {
+                    $normalizedWords[] = $word;
+                }
+            }
+
+            $query = implode(' ', $normalizedWords);
+            // === End tambahan ===
+
             // 1) Buat embedding pertanyaan
             $queryEmbedding = $this->createEmbedding($query);
             if (!$queryEmbedding) {
