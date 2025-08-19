@@ -696,7 +696,7 @@
             console.log("EDIT:", id);
 
             $.ajax({
-                url: '/chat/get-group-chat',
+                url: '/chat/get-group',
                 method: 'GET',
                 data: {
                     group_id: id
