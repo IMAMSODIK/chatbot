@@ -232,6 +232,7 @@ class ChatController extends Controller
                     . "- Jawab dalam bentuk poin-poin HTML (<ul><li>...</li></ul>).\n"
                     . "- Saat menyebut sumber, tuliskan dengan format: 'Dokumen [nama dokumen] halaman [nomor]'.\n"
                     . "- Sertakan semua dokumen relevan yang ditemukan dalam context (jangan abaikan jika ada lebih dari satu dokumen yang membahas topik yang sama).\n\n"
+                    . "dan tanpa ada '''html''' tag.\n"
                     . "Jawaban:";
 
 
