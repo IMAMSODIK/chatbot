@@ -691,6 +691,9 @@
         $(document).on("click", ".edit", function(e) {
             e.stopPropagation();
 
+            let id = $(this).closest(".fn__chat_link").data("id");
+            console.log(id);
+
             rn.addClass("opened");
 
             // var t = $(this).closest(".fn__chat_link");
