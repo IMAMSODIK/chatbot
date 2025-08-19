@@ -146,8 +146,11 @@
         <div class="font__dialog">
             <h3 class="title">Are you sure?</h3>
             <input type="hidden" name="" id="chat-id2">
-            <label for="chat-delete" style="margin-bottom: 80px">are you sure to delete this chats?</label>
-            <a class="apply techwave_fn_button"><span>Delete</span></a>
+            <label for="chat-delete" style="display:block; text-align:center;">
+                Are you sure to delete this chats?
+            </label>
+
+            <a class="apply techwave_fn_button" style="margin-top: 50px"><span>Delete</span></a>
         </div>
     </div>
 
