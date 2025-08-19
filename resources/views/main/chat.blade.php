@@ -689,10 +689,12 @@
         let rn = $(".techwave_fn_rename");
 
         $(document).on("click", ".edit", function(e) {
-            e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation(); // Hentikan bubbling ke parent
 
             let id = $(this).closest(".fn__chat_link").data("id");
-            console.log(id);
+            console.log("EDIT:", id);
+
             $.ajax({
                 url: '/chat/get-group-chat',
                 method: 'GET',
@@ -701,7 +703,7 @@
                 },
                 success: function(response) {
                     if (response.status) {
-                        rn.addClass("opened");
+                        $(".techwave_fn_rename").addClass("opened"); // ganti rn dengan selektor jelas
                         $("#chat-raname").val(response.group_chat.kategori.title);
                     } else {
                         alert('Failed to load group chat');
@@ -712,6 +714,7 @@
                 }
             });
         });
+
 
         $(".techwave_fn_rename .font__closer_link").on("click", function() {
             rn.removeClass("opened");
@@ -759,14 +762,6 @@
 
 
     <script>
-        // pertama kali user masuk -> check apakah ada group chat terbaru berdasarkan user login
-        // ada -> ambil semua chat berdasarkan user login dan grou chat id
-        //         ambil semua group chat
-        //         isi id group chat di html
-        // jika tidak, maka group chat akan dibuat pada saat mengirim pesan
-        // pada saat klik new chat, kosongkan id group chat di html
-        // pada saat klik kategori chat, kosongkan konten html dan isi dengan chats dari kategori dam isi grup id di html
-
         $(document).on("click", ".fn__chat_link", function(e) {
             e.preventDefault();
 
