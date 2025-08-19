@@ -126,6 +126,18 @@
         </div>
     </div>
 
+    <div class="techwave_fn_rename">
+        <a class="font__closer_link fn__icon_button" href="#"><img src="{{ asset('chat_assets/svg/close.svg') }}"
+                alt="" class="fn__svg"></a>
+        <div class="font__closer"></div>
+        <div class="font__dialog">
+            <h3 class="title">Rename Chats</h3>
+            <label for="chat-raname">Rename</label>
+            <textarea rows="1" placeholder="Enter chats name" id="chat-raname"></textarea>
+            <a class="apply techwave_fn_button"><span>Apply</span></a>
+        </div>
+    </div>
+
     <div class="techwave_fn_wrapper fn__has_sidebar">
         <div class="techwave_fn_wrap">
 
@@ -671,6 +683,44 @@
             }
 
             ct.removeClass("opened");
+        });
+
+
+        let rn = $(".techwave_fn_rename");
+
+        $(document).on("click", ".edit", function(e) {
+            e.stopPropagation();
+
+            rn.addClass("opened");
+
+            // var t = $(this).closest(".fn__chat_link");
+            // return t.hasClass("opened") ? t.removeClass("opened") : t.addClass("opened")
+        });
+
+        $(".techwave_fn_rename .font__closer_link").on("click", function() {
+            rn.removeClass("opened");
+        });
+
+        $(".techwave_fn_rename .font__closer").on("click", function() {
+            rn.removeClass("opened");
+        });
+
+        $(".techwave_fn_rename .apply").on("click", function(e) {
+            // let selectedChatType = $("#chat-raname").val();
+            // $("#chat-raname").val(selectedChatType);
+
+            // $("#chat-type").data("type", selectedChatType);
+            // $("#chat-type").text(selectedChatType);
+
+            // if (selectedChatType === 'Tanya Jawab') {
+            //     $("#fn__chat_textarea").css('display', '');
+            //     $("#input_file").css('display', 'none');
+            // } else {
+            //     $("#fn__chat_textarea").css('display', 'none');
+            //     $("#input_file").css('display', '');
+            // }
+
+            rn.removeClass("opened");
         });
 
         $("#logout").on("click", function() {
