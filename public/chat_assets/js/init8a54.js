@@ -498,10 +498,7 @@ var FrenifyTechWaveTime = new Date;
 				}), e(document).on('click', ".options__popup", function (e) {
 					alert('test');
 					e.stopPropagation();
-				}),
-				// e(".fn__chat_link .options__popup").on("click", function (e) {
-				// 	e.stopPropagation()
-				// })
+				})
 			},
 			aiChatBotTextareaHeight: function () {
 				e("#fn__chat_textarea").on("mouseup keyup", function () {
