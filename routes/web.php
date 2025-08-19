@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat/get-group-chat', [ChatController::class, 'getGroupChat']);
     Route::get('/chat/get-chats', [ChatController::class, 'getChat']);
     Route::get('/chat/get-group', [ChatController::class, 'getGroup']);
+    Route::post('/chat/update-group', [ChatController::class, 'updateGroup']);
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

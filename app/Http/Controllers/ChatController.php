@@ -649,4 +649,29 @@ EOT;
             ]);
         }
     }
+
+    public function updateGroup(Request $request)
+    {
+        $request->validate([
+            'group_id' => 'required|exists:group_chats,id',
+            'title' => 'required|string|max:255',
+        ]);
+
+        try {
+            $groupChat = GroupChat::findOrFail($request->group_id);
+            $groupChat->title = $request->title;
+            $groupChat->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Group chat berhasil diperbarui.',
+                'group_chat' => $groupChat
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

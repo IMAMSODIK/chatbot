@@ -132,6 +132,7 @@
         <div class="font__closer"></div>
         <div class="font__dialog">
             <h3 class="title">Rename Chats</h3>
+            <input type="hidden" name="" id="chat-id">
             <label for="chat-raname">Rename</label>
             <textarea rows="1" placeholder="Enter chats name" id="chat-raname"></textarea>
             <a class="apply techwave_fn_button"><span>Apply</span></a>
@@ -693,7 +694,6 @@
             e.stopPropagation(); // Hentikan bubbling ke parent
 
             let id = $(this).closest(".fn__chat_link").data("id");
-            console.log("EDIT:", id);
 
             $.ajax({
                 url: '/chat/get-group',
@@ -705,6 +705,8 @@
                     if (response.status) {
                         $(".techwave_fn_rename").addClass("opened"); // ganti rn dengan selektor jelas
                         $("#chat-raname").val(response.group_chat.title);
+                        $("#chat-id").val(response.group_chat.id);
+                        $("#chat-raname").focus();
                     } else {
                         alert('Failed to load group chat');
                     }
@@ -725,21 +727,37 @@
         });
 
         $(".techwave_fn_rename .apply").on("click", function(e) {
-            // let selectedChatType = $("#chat-raname").val();
-            // $("#chat-raname").val(selectedChatType);
+            e.preventDefault();
+            let chatName = $("#chat-raname").val();
+            let chatId = $("#chat-id").val();
+            let token = $("meta[name='csrf-token']").attr('content');
 
-            // $("#chat-type").data("type", selectedChatType);
-            // $("#chat-type").text(selectedChatType);
+            if (chatName.trim() === '') {
+                alert('Chat name cannot be empty');
+                return;
+            }
 
-            // if (selectedChatType === 'Tanya Jawab') {
-            //     $("#fn__chat_textarea").css('display', '');
-            //     $("#input_file").css('display', 'none');
-            // } else {
-            //     $("#fn__chat_textarea").css('display', 'none');
-            //     $("#input_file").css('display', '');
-            // }
-
-            rn.removeClass("opened");
+            $.ajax({
+                url: '/chat/update-group',
+                method: 'POST',
+                data: {
+                    "_token": token,
+                    "group_id": chatId,
+                    "title": chatName
+                },
+                success: function(response) {
+                    if (response.status) {
+                        $(`.fn__chat_link[data-id="${chatId}"] .text`).text(chatName);
+                        $(`.fn__chat_link[data-id="${chatId}"] input`).val(chatName);
+                        rn.removeClass("opened");
+                    } else {
+                        alert('Failed to update group chat');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.statusText);
+                }
+            });
         });
 
         $("#logout").on("click", function() {
