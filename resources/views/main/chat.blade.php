@@ -710,7 +710,7 @@
             let id = $(this).closest(".fn__chat_link").data("id");
 
             $.ajax({
-                url: '/chat/delete-group',
+                url: '/chat/get-group',
                 method: 'GET',
                 data: {
                     group_id: id
