@@ -704,7 +704,7 @@
                 success: function(response) {
                     if (response.status) {
                         $(".techwave_fn_rename").addClass("opened"); // ganti rn dengan selektor jelas
-                        $("#chat-raname").val(response.group_chat.kategori.title);
+                        $("#chat-raname").val(response.group_chat.title);
                     } else {
                         alert('Failed to load group chat');
                     }
@@ -764,6 +764,10 @@
     <script>
         $(document).on("click", ".fn__chat_link", function(e) {
             e.preventDefault();
+
+            if ($(e.target).closest(".edit").length) {
+                return;
+            }
 
             // 🔄 Pindahkan class active ke item yang diklik
             $(".fn__chat_link").removeClass("active");
