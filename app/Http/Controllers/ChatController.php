@@ -225,16 +225,15 @@ class ChatController extends Controller
             $context = implode("\n", $contextBlocks);
 
             // 10) Prompt Gemini yang memaksa menyebut semua referensi yang relevan
-            $prompt = "Gunakan hanya informasi pada daftar referensi berikut untuk menjawab pertanyaan.\n\n"
-                . "DAFTAR REFERENSI (gunakan format sitasi REF[n], halaman x):\n$context\n\n"
-                . "PERTANYAAN: $query\n\n"
-                . "PANDUAN JAWABAN (WAJIB DIIKUTI):\n"
-                . "1) Jawab ringkas dan terstruktur dalam HTML <ul><li>...</li></ul> (tanpa ```html```).\n"
-                . "2) Setiap butir yang menyebut fakta harus mencantumkan sitasi seperti (REF[n], hlm x).\n"
-                . "3) Jika ada lebih dari satu referensi relevan, gabungkan dan sebutkan semuanya pada butir terkait.\n"
-                . "4) Jangan gunakan sumber di luar daftar. Jika ada referensi yang tampak relevan tetapi tidak dipakai, tambahkan bagian 'Catatan' yang menjelaskan singkat alasannya.\n"
-                . "5) Di akhir, tambahkan bagian <h4>Ringkasan</h4> berisi 2-3 poin utama.\n\n"
-                . "Jawaban:";
+            $prompt = "Gunakan informasi berikut untuk menjawab pertanyaan dengan selengkap mungkin.\n\n"
+                    . "Context:\n$context\n\n"
+                    . "Pertanyaan: $query\n\n"
+                    . "Format jawaban:\n"
+                    . "- Jawab dalam bentuk poin-poin HTML (<ul><li>...</li></ul>).\n"
+                    . "- Saat menyebut sumber, tuliskan dengan format: 'Dokumen [nama dokumen] halaman [nomor]'.\n"
+                    . "- Sertakan semua dokumen relevan yang ditemukan dalam context (jangan abaikan jika ada lebih dari satu dokumen yang membahas topik yang sama).\n\n"
+                    . "Jawaban:";
+
 
             $answer = $this->askGemini($prompt) ?: '';
 
