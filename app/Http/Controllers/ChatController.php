@@ -579,12 +579,12 @@ EOT;
         try {
             $kategori = GroupChat::where('user_id', auth()->id())
                 ->with('chats')
-                ->orderBy('updated_at', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->get();
 
             $latestGroupChat = GroupChat::where('user_id', auth()->id())
                 ->with('chats')
-                ->orderBy('updated_at', 'desc')
+                ->orderBy('created_at', 'desc')
                 ->first();
 
             return response()->json([
@@ -666,6 +666,28 @@ EOT;
                 'status' => true,
                 'message' => 'Group chat berhasil diperbarui.',
                 'group_chat' => $groupChat
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function deleteGroup(Request $request)
+    {
+        $request->validate([
+            'group_id' => 'required|exists:group_chats,id',
+        ]);
+
+        try {
+            $groupChat = GroupChat::findOrFail($request->group_id);
+            $groupChat->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Group chat berhasil dihapus.'
             ]);
         } catch (\Exception $e) {
             return response()->json([

@@ -139,6 +139,19 @@
         </div>
     </div>
 
+    <div class="techwave_fn_delete">
+        <a class="font__closer_link fn__icon_button" href="#"><img src="{{ asset('chat_assets/svg/close.svg') }}"
+                alt="" class="fn__svg"></a>
+        <div class="font__closer"></div>
+        <div class="font__dialog">
+            <h3 class="title">Are you sure?</h3>
+            <input type="hidden" name="" id="chat-id2">
+            <label for="chat-delete">are you sure to delete this chats?</label>
+            <a class="font__closer techwave_fn_button"><span>Cancel</span></a>
+            <a class="apply techwave_fn_button"><span>Delete</span></a>
+        </div>
+    </div>
+
     <div class="techwave_fn_wrapper fn__has_sidebar">
         <div class="techwave_fn_wrap">
 
@@ -688,6 +701,75 @@
 
 
         let rn = $(".techwave_fn_rename");
+        let delete = $(".techwave_fn_delete");
+
+        $(document).on("click", ".delete", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let id = $(this).closest(".fn__chat_link").data("id");
+
+            $.ajax({
+                url: '/chat/delete-group',
+                method: 'GET',
+                data: {
+                    group_id: id
+                },
+                success: function(response) {
+                    if (response.status) {
+                        $(".techwave_fn_delete").addClass("opened");
+                        $("#chat-delete").val(response.group_chat.id);
+                    } else {
+                        alert('Failed to load group chat');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.statusText);
+                }
+            });
+        });
+
+
+        $(".techwave_fn_delete .font__closer_link").on("click", function() {
+            delete.removeClass("opened");
+        });
+
+        $(".techwave_fn_delete .font__closer").on("click", function() {
+            delete.removeClass("opened");
+        });
+
+        $(".techwave_fn_delete .apply").on("click", function(e) {
+            e.preventDefault();
+            let chatId = $("#chat-delete").val();
+            let token = $("meta[name='csrf-token']").attr('content');
+
+            $.ajax({
+                url: '/chat/delete-group',
+                method: 'POST',
+                data: {
+                    "_token": token,
+                    "group_id": chatId
+                },
+                success: function(response) {
+                    if (response.status) {
+                        $(`.fn__chat_link[data-id="${chatId}"]`).remove();
+                        $(".chat__item.active").empty();
+                        $("#group-chat").val('');
+                        $(".techwave_fn_delete").removeClass("opened");
+                        $(".fn__chat_link.active").removeClass("active");
+                        $(".fn__chat_link").first().addClass("active");
+                        $("#group-chat").val($(".fn__chat_link").first().data("id"));
+                        $(".chat__item.active").empty();
+                        rn.removeClass("opened");
+                    } else {
+                        alert('Failed to update group chat');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.statusText);
+                }
+            });
+        });
 
         $(document).on("click", ".edit", function(e) {
             e.preventDefault();

@@ -3150,7 +3150,8 @@ a.fn__like.no_border .fn__svg {
     color: var(--techwave-heading-color)
 }
 
-.techwave_fn_rename .title {
+.techwave_fn_rename .title,
+.techwave_fn_delete .title {
     font-family: var(--techwave-heading-font-family);
     color: var(--techwave-heading-color)
 }
@@ -3211,7 +3212,8 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_chat-type.opened,
 .techwave_fn_rename.opened,
-.techwave_fn_report.opened {
+.techwave_fn_report.opened,
+.techwave_fn_delete.opened {
     pointer-events: all;
     opacity: 1;
     visibility: visible
@@ -3255,7 +3257,8 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_chat-type .title,
 .techwave_fn_rename .title,
-.techwave_fn_report .title {
+.techwave_fn_report .title,
+.techwave_fn_delete .title {
     text-align: center;
     margin: 0 0 4px;
     padding: 0;
@@ -3541,6 +3544,7 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_chat-type select,
 .techwave_fn_rename select,
+.techwave_fn_delete select,
 .techwave_fn_image_generation_page .generation__sidebar .prompt_magic_switcher,
 .techwave_fn_sign .form__pass {
     margin-bottom: 30px
@@ -5704,8 +5708,9 @@ a.fn__like.no_border .fn__svg {
 
 .fn__generation_item .item_header .title_holder,
 .techwave_fn_font .techwave_fn_button,
-.techwave_fn_chat-type, .techwave_fn_button,
-.techwave_fn_rename, .techwave_fn_button{
+.techwave_fn_chat-type .techwave_fn_button,
+.techwave_fn_rename .techwave_fn_button,
+.techwave_fn_delete .techwave_fn_button {
     width: 100%
 }
 
@@ -5865,7 +5870,8 @@ a.fn__like.no_border .fn__svg {
 .fn__model_item .item,
 .techwave_fn_font .font__dialog,
 .techwave_fn_chat-type .font__dialog,
-.techwave_fn_rename .font__dialog {
+.techwave_fn_rename .font__dialog,
+.techwave_fn_delete .font__dialog {
     background-color: var(--techwave-some-r-bg-color)
 }
 
@@ -6271,7 +6277,8 @@ a.fn__like.no_border .fn__svg {
 .fn__model_item.new .item,
 .techwave_fn_font,
 .techwave_fn_chat-type,
-.techwave_fn_rename {
+.techwave_fn_rename,
+.techwave_fn_delete {
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -6409,7 +6416,8 @@ a.fn__like.no_border .fn__svg {
 .fn__model_item .author_name,
 .techwave_fn_font label,
 .techwave_fn_chat-type label,
-.techwave_fn_rename .label {
+.techwave_fn_rename .label,
+.techwave_fn_delete .label {
     color: var(--techwave-heading-color)
 }
 
@@ -6549,7 +6557,8 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font,
 .techwave_fn_chat-type,
-.techwave_fn_rename {
+.techwave_fn_rename,
+.techwave_fn_delete {
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
@@ -6586,7 +6595,8 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font .font__closer_link,
 .techwave_fn_chat-type .font__closer_link,
-.techwave_fn_rename .font__closer_link {
+.techwave_fn_rename .font__closer_link,
+.techwave_fn_delete .font__closer_link {
     position: fixed;
     right: 35px;
     top: 35px;
@@ -6595,7 +6605,8 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font .font__closer,
 .techwave_fn_chat-type .font__closer,
-.techwave_fn_rename .font__closer {
+.techwave_fn_rename .font__closer,
+.techwave_fn_delete .font__closer {
     z-index: 1;
     position: absolute;
     top: 0;
@@ -6606,7 +6617,8 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font .font__dialog,
 .techwave_fn_chat-type .font__dialog,
-.techwave_fn_rename .font__dialog {
+.techwave_fn_rename .font__dialog,
+.techwave_fn_delete .font__dialog {
     width: 500px;
     max-width: 100%;
     border-radius: 5px;
@@ -6618,7 +6630,8 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font label,
 .techwave_fn_chat-type label,
-.techwave_fn_rename .label {
+.techwave_fn_rename .label,
+.techwave_fn_delete .label {
     display: block;
     font-size: 16px;
     font-weight: 400;
