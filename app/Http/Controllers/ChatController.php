@@ -90,7 +90,7 @@ class ChatController extends Controller
             }
 
             // === Buat Dictionary Dinamis dari semua dokumen ===
-            $allTexts = \DB::table('document_pages')->pluck('content')->implode(' ');
+            $allTexts = DB::table('document_pages')->pluck('page_text')->implode(' ');
             $allWords = preg_split('/[\s,.\-:;()]+/', mb_strtolower($allTexts, 'UTF-8'));
             $allWords = array_unique(array_filter($allWords));
 
