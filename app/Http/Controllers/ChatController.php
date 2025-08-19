@@ -275,6 +275,7 @@ class ChatController extends Controller
                 . "5. Sertakan semua informasi relevan dari semua dokumen.\n"
                 . "6. Jangan pakai format sitasi seperti (Doc, p. 9).\n"
                 . "7. Jangan gunakan block code (```html). Output langsung HTML.\n\n"
+                . "8. bedakan yang mana judul yang mana poin (jangan gunakan header besar seperti h1 dan h2).\n\n"
                 . "Jawaban:";
 
             $rawAnswer = $this->askGemini($prompt) ?: '';
