@@ -823,7 +823,7 @@
             });
         });
 
-        $(document).off("click", ".fn__chat_link .trigger").on("click", ".fn__chat_link .trigger", function(e) {
+        $(document).on("click", ".fn__chat_link .trigger", function(e) {
             e.preventDefault();
 
             var t = $(this).closest(".fn__chat_link");
