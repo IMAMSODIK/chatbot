@@ -702,7 +702,7 @@
                 success: function(response) {
                     if (response.status) {
                         rn.addClass("opened");
-                        $("#chat-raname").val(response.group_chat.title);
+                        $("#chat-raname").val(response.group_chat.kategori.title);
                     } else {
                         alert('Failed to load group chat');
                     }
