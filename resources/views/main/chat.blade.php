@@ -824,7 +824,7 @@
         });
 
 
-        $(document).on("click", ".options__popup", function(e) {
+        $(document).on("click", ".options", function(e) {
             e.stopPropagation();
             alert('test');
         });
