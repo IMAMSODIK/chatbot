@@ -6606,7 +6606,7 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font .font__dialog,
 .techwave_fn_chat-type .font__dialog,
-.techwave_fn_rename, .font__dialog {
+.techwave_fn_rename .font__dialog {
     width: 500px;
     max-width: 100%;
     border-radius: 5px;

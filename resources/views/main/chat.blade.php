@@ -126,7 +126,7 @@
         </div>
     </div>
 
-    {{-- <div class="techwave_fn_rename">
+    <div class="techwave_fn_rename">
         <a class="font__closer_link fn__icon_button" href="#"><img src="{{ asset('chat_assets/svg/close.svg') }}"
                 alt="" class="fn__svg"></a>
         <div class="font__closer"></div>
@@ -136,7 +136,7 @@
             <textarea rows="1" placeholder="Enter chats name" id="chat-raname"></textarea>
             <a class="apply techwave_fn_button"><span>Apply</span></a>
         </div>
-    </div> --}}
+    </div>
 
     <div class="techwave_fn_wrapper fn__has_sidebar">
         <div class="techwave_fn_wrap">
