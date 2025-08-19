@@ -3150,7 +3150,7 @@ a.fn__like.no_border .fn__svg {
     color: var(--techwave-heading-color)
 }
 
-.techwave_fn_rename, .title {
+.techwave_fn_rename .title {
     font-family: var(--techwave-heading-font-family);
     color: var(--techwave-heading-color)
 }
@@ -5864,8 +5864,8 @@ a.fn__like.no_border .fn__svg {
 .fn__bookmark,
 .fn__model_item .item,
 .techwave_fn_font .font__dialog,
-.techwave_fn_chat-type, .font__dialog,
-.techwave_fn_rename, .font__dialog {
+.techwave_fn_chat-type .font__dialog,
+.techwave_fn_rename .font__dialog {
     background-color: var(--techwave-some-r-bg-color)
 }
 
@@ -6409,7 +6409,7 @@ a.fn__like.no_border .fn__svg {
 .fn__model_item .author_name,
 .techwave_fn_font label,
 .techwave_fn_chat-type label,
-.techwave_fn_rename, .label {
+.techwave_fn_rename .label {
     color: var(--techwave-heading-color)
 }
 
@@ -6586,7 +6586,7 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font .font__closer_link,
 .techwave_fn_chat-type .font__closer_link,
-.techwave_fn_rename, .font__closer_link {
+.techwave_fn_rename .font__closer_link {
     position: fixed;
     right: 35px;
     top: 35px;
@@ -6595,7 +6595,7 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font .font__closer,
 .techwave_fn_chat-type .font__closer,
-.techwave_fn_rename, .font__closer {
+.techwave_fn_rename .font__closer {
     z-index: 1;
     position: absolute;
     top: 0;
@@ -6618,7 +6618,7 @@ a.fn__like.no_border .fn__svg {
 
 .techwave_fn_font label,
 .techwave_fn_chat-type label,
-.techwave_fn_rename, .label {
+.techwave_fn_rename .label {
     display: block;
     font-size: 16px;
     font-weight: 400;
