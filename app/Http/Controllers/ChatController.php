@@ -391,9 +391,9 @@ Analisis kesesuaian dokumen berikut dengan ISO 27001.
 Tampilkan hasil dalam format HTML richtext (tanpa blok kode atau ```).
 
 Struktur jawaban:
-1. **Sesuai** — jelaskan poin yang sudah sesuai, sertakan referensi halaman ISO (contoh: "... sesuai dengan ISO 27001 yang dijelaskan di halaman 12").
-2. **Perlu Perbaikan** — jelaskan poin yang kurang sesuai, sertakan referensi halaman ISO.
-3. **Saran** — berikan rekomendasi perbaikan, tetap sertakan halaman acuan dari ISO.
+1. **Sesuai** — jelaskan poin yang sudah sesuai, sertakan referensi halaman ISO (contoh: "... sesuai dengan ISO 27001 yang dijelaskan di halaman 12") serta buat dalam bentuk poin-poin.
+2. **Perlu Perbaikan** — jelaskan poin yang kurang sesuai, sertakan referensi halaman ISO serta buat dalam bentuk poin-poin.
+3. **Saran** — berikan rekomendasi perbaikan, tetap sertakan halaman acuan dari ISO serta buat dalam bentuk poin-poin.
 
 Data ISO relevan (nomor poin & halaman):
 $relevantIso
