@@ -823,16 +823,10 @@
             });
         });
 
-        $(document).on("click", ".fn__chat_link .trigger", function(e) {
-            e.preventDefault();
 
-            var t = $(this).closest(".fn__chat_link");
-
-            if (t.hasClass("opened")) {
-                t.removeClass("opened");
-            } else {
-                t.addClass("opened");
-            }
+        $(document).on("click", ".options__popup", function(e) {
+            e.stopPropagation();
+            alert('test');
         });
     </script>
 </body>
