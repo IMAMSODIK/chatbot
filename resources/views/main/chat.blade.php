@@ -701,7 +701,7 @@
 
 
         let rn = $(".techwave_fn_rename");
-        let delete = $(".techwave_fn_delete");
+        let deleteBtn = $(".techwave_fn_delete");
 
         $(document).on("click", ".delete", function(e) {
             e.preventDefault();
@@ -731,11 +731,11 @@
 
 
         $(".techwave_fn_delete .font__closer_link").on("click", function() {
-            delete.removeClass("opened");
+            deleteBtn.removeClass("opened");
         });
 
         $(".techwave_fn_delete .font__closer").on("click", function() {
-            delete.removeClass("opened");
+            deleteBtn.removeClass("opened");
         });
 
         $(".techwave_fn_delete .apply").on("click", function(e) {
