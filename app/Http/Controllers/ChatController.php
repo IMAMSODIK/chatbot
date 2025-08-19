@@ -625,4 +625,28 @@ EOT;
             ]);
         }
     }
+
+    public function getGroup(Request $request)
+    {
+        try {
+            $groupChat = GroupChat::where('id', $request->group_id)->first();
+
+            if (!$groupChat) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Group chat tidak ditemukan.'
+                ]);
+            }
+
+            return response()->json([
+                'status' => true,
+                'group_chat' => $groupChat
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

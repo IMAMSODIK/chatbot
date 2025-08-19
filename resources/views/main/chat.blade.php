@@ -693,11 +693,24 @@
 
             let id = $(this).closest(".fn__chat_link").data("id");
             console.log(id);
-
-            rn.addClass("opened");
-
-            // var t = $(this).closest(".fn__chat_link");
-            // return t.hasClass("opened") ? t.removeClass("opened") : t.addClass("opened")
+            $.ajax({
+                url: '/chat/get-group-chat',
+                method: 'GET',
+                data: {
+                    group_id: id
+                },
+                success: function(response) {
+                    if (response.status) {
+                        rn.addClass("opened");
+                        $("#chat-raname").val(response.group_chat.title);
+                    } else {
+                        alert('Failed to load group chat');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.statusText);
+                }
+            });
         });
 
         $(".techwave_fn_rename .font__closer_link").on("click", function() {
