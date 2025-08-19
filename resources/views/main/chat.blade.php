@@ -146,7 +146,7 @@
         <div class="font__dialog">
             <h3 class="title">Are you sure?</h3>
             <input type="hidden" name="" id="chat-id2">
-            <label for="chat-delete">are you sure to delete this chats?</label>
+            <label for="chat-delete" style="margin-bottom: 80px">are you sure to delete this chats?</label>
             <a class="apply techwave_fn_button"><span>Delete</span></a>
         </div>
     </div>
@@ -717,7 +717,7 @@
                 success: function(response) {
                     if (response.status) {
                         $(".techwave_fn_delete").addClass("opened");
-                        $("#chat-delete").val(response.group_chat.id);
+                        $("#chat-id2").val(response.group_chat.id);
                     } else {
                         alert('Failed to load group chat');
                     }
@@ -739,7 +739,7 @@
 
         $(".techwave_fn_delete .apply").on("click", function(e) {
             e.preventDefault();
-            let chatId = $("#chat-delete").val();
+            let chatId = $("#chat-id2").val();
             let token = $("meta[name='csrf-token']").attr('content');
 
             $.ajax({
