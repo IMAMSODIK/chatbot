@@ -276,8 +276,9 @@
                                         <img src="{{ asset('chat_assets/img/user/user.jpg') }}" alt="">
                                     </div>
                                     <div class="user_info">
-                                        <h2 class="user_name">{{auth()->user()->name}}<span></span></h2>
-                                        <p><a href="mailto:{{auth()->user()->email}}" class="user_email">{{auth()->user()->email}}</a>
+                                        <h2 class="user_name">{{ auth()->user()->name }}<span></span></h2>
+                                        <p><a href="mailto:{{ auth()->user()->email }}"
+                                                class="user_email">{{ auth()->user()->email }}</a>
                                         </p>
                                     </div>
                                 </div>
@@ -820,6 +821,18 @@
                     alert('Terjadi kesalahan: ' + xhr.statusText);
                 }
             });
+        });
+
+        $(document).off("click", ".fn__chat_link .trigger").on("click", ".fn__chat_link .trigger", function(e) {
+            e.preventDefault();
+
+            var t = $(this).closest(".fn__chat_link");
+
+            if (t.hasClass("opened")) {
+                t.removeClass("opened");
+            } else {
+                t.addClass("opened");
+            }
         });
     </script>
 </body>

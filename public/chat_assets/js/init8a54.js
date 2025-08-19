@@ -476,9 +476,6 @@ var FrenifyTechWaveTime = new Date;
 					return t.hasClass("active") || (e(".fn__chat_link.active").removeClass("active"), e(".fn__chatbot .chat__item.active").removeClass("active"), t.addClass("active"), e(t.attr("href")).addClass("active"), i = 0, e(".fn__chatbot .fn__title_holder .title").text("Teset")), e(".fn__chat_comment").addClass("neww"), e("#fn__chat_textarea").frenifyMoveCursorToEnd(), !1
 				}), e(".fn__chat_link input").off().on("click", function (e) {
 					e.stopPropagation()
-				}), e(".fn__chat_link .trigger").off().on("click", function () {
-					var t = e(this).closest(".fn__chat_link");
-					return t.hasClass("opened") ? t.removeClass("opened") : t.addClass("opened"), !1
 				}), e(".fn__chat_link .edit").off().on("click", function () {
 					var t = e(this).closest(".fn__chat_link"),
 						a = t.find("input");
@@ -495,9 +492,8 @@ var FrenifyTechWaveTime = new Date;
 					return t.removeClass("live_edit"), n = a.val(), t.find(".text").text(n), !1
 				}), e(window).on("click", function () {
 					e(".fn__chat_link").removeClass("opened")
-				}), e(document).on('click', ".options__popup", function (e) {
-					alert('test');
-					e.stopPropagation();
+				}), e(".fn__chat_link .options__popup").on("click", function (e) {
+					e.stopPropagation()
 				})
 			},
 			aiChatBotTextareaHeight: function () {
