@@ -28,7 +28,7 @@ class AuthController extends Controller
             if ($user->status != 1) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Akun Anda belum diverifikasi. Silakan cek email atau hubungi admin.'
+                    'message' => 'Akun Anda belum diverifikasi. Silakan hubungi admin.'
                 ]);
             }
 
