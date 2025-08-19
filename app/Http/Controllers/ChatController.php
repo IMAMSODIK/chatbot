@@ -28,7 +28,6 @@ class ChatController extends Controller
     {
         if ($request->type == 'Tanya Jawab') {
             $query = trim($request->input('message'));
-
             if (!$query) {
                 return response()->json([
                     'success' => false,
@@ -36,9 +35,8 @@ class ChatController extends Controller
                 ]);
             }
 
-            // 1️⃣ Buat embedding untuk pertanyaan
+            // 1) Embedding pertanyaan
             $queryEmbedding = $this->createEmbedding($query);
-
             if (!$queryEmbedding) {
                 return response()->json([
                     'success' => false,
@@ -46,7 +44,7 @@ class ChatController extends Controller
                 ]);
             }
 
-            // 2️⃣ Ambil semua halaman dengan embedding
+            // 2) Ambil semua halaman yang punya embedding
             $pages = DB::table('document_pages')
                 ->join('documents', 'document_pages.document_id', '=', 'documents.id')
                 ->whereNotNull('document_pages.embed')
@@ -61,20 +59,64 @@ class ChatController extends Controller
                 )
                 ->get();
 
-            // 3️⃣ Hitung cosine similarity
-            $scoredPages = $pages->map(function ($page) use ($queryEmbedding) {
-                $pageEmbedding = json_decode($page->embed, true);
-                $similarity = $this->cosineSimilarity($queryEmbedding, $pageEmbedding);
-                $page->similarity = $similarity;
-                return $page;
+            // 3) Siapkan keyword & sinonim untuk boosting
+            $qLower = mb_strtolower($query, 'UTF-8');
+            $keywords = [$qLower];
+
+            // sinonim sederhana (bisa kamu tambah sesuai domain)
+            $synonyms = [];
+            if (preg_match('/password/i', $query)) {
+                $synonyms = ['kata sandi', 'sandi', 'passphrase', 'kredensial', 'credential', 'login', 'autentikasi', 'authentication'];
+            }
+            $keywords = array_unique(array_merge($keywords, array_map(function ($s) {
+                return mb_strtolower($s, 'UTF-8');
+            }, $synonyms)));
+
+            $containsAny = function (string $haystack, array $needles): bool {
+                $hl = mb_strtolower($haystack, 'UTF-8');
+                foreach ($needles as $n) {
+                    if (mb_strpos($hl, $n) !== false) return true;
+                }
+                return false;
+            };
+
+            // 4) Skor: cosine similarity + keyword boost
+            $scored = $pages->map(function ($p) use ($queryEmbedding, $keywords, $containsAny) {
+                $pageEmbedding = json_decode($p->embed, true);
+                $sim = $this->cosineSimilarity($queryEmbedding, $pageEmbedding);
+                $boost = $containsAny($p->page_text ?? '', $keywords) ? 0.25 : 0.0; // boost jika ada keyword/sinonim
+                $p->similarity = $sim;
+                $p->score = $sim + $boost; // gabungan
+                return $p;
             });
 
-            // 4️⃣ Ambil top 5 berdasarkan similarity
-            $topPages = $scoredPages->sortByDesc('similarity')->take(5);
+            // 5) Ambil kandidat teratas lebar (untuk cakupan dokumen)
+            $candidatePages = $scored->sortByDesc('score')->take(50);
 
-            // 5️⃣ Fallback: kalau embedding tidak nemu hasil relevan
-            if ($topPages->isEmpty() || $topPages->max('similarity') < 0.2) {
-                $keywordPages = DB::table('document_pages')
+            // 6) Sebar per dokumen: max 2 halaman per dokumen, max 8 dokumen
+            $pagesPerDoc = 2;
+            $maxDocs = 8;
+
+            $grouped = $candidatePages->groupBy('document_id')->map(function ($items) use ($pagesPerDoc) {
+                return $items->sortByDesc('score')->take($pagesPerDoc)->values();
+            });
+
+            // Susun kembali mempertahankan urutan dokumen berdasarkan skor tertinggi di masing2 doc
+            $orderedDocs = $grouped->sortByDesc(function ($collection) {
+                return $collection->max('score');
+            })->take($maxDocs);
+
+            $selectedPages = collect();
+            foreach ($orderedDocs as $collection) {
+                foreach ($collection as $p) {
+                    $selectedPages->push($p);
+                }
+            }
+
+            // 7) Fallback LIKE jika hasil terlalu lemah
+            $bestScore = $selectedPages->max('score');
+            if ($selectedPages->isEmpty() || $bestScore < 0.2) {
+                $likePages = DB::table('document_pages')
                     ->join('documents', 'document_pages.document_id', '=', 'documents.id')
                     ->where('document_pages.page_text', 'LIKE', "%{$query}%")
                     ->select(
@@ -85,24 +127,38 @@ class ChatController extends Controller
                         'documents.title',
                         'documents.file_path'
                     )
-                    ->take(5)
+                    ->take(20)
                     ->get();
 
-                if ($keywordPages->isNotEmpty()) {
-                    $topPages = $keywordPages;
+                if ($likePages->isNotEmpty()) {
+                    // gunakan penyebaran yang sama per dokumen
+                    $groupedLike = $likePages->groupBy('document_id')->map(function ($items) use ($pagesPerDoc) {
+                        return $items->take($pagesPerDoc)->values();
+                    });
+
+                    $orderedLikeDocs = $groupedLike->sortByDesc(function ($collection) {
+                        // kira2 skor 0.5 agar di atas threshold
+                        return 0.5;
+                    })->take($maxDocs);
+
+                    $selectedPages = collect();
+                    foreach ($orderedLikeDocs as $collection) {
+                        foreach ($collection as $p) {
+                            // isikan nilai default untuk field yang mungkin tidak ada (embed/score)
+                            $p->similarity = $p->similarity ?? 0.0;
+                            $p->score = $p->score ?? 0.6;
+                            $selectedPages->push($p);
+                        }
+                    }
                 }
             }
 
-            // 6️⃣ Kalau tetap kosong → langsung balikin "Tidak ada jawaban"
-            if ($topPages->isEmpty()) {
-                if ($request->group_chat) {
-                    $groupChat = GroupChat::where('id', $request->group_chat)->first();
-                } else {
-                    $groupChat = GroupChat::create([
-                        'user_id' => auth()->id(),
-                        'title' => $query
-                    ]);
-                }
+            // 8) Jika tetap kosong
+            if ($selectedPages->isEmpty()) {
+                // simpan chat minimal
+                $groupChat = $request->group_chat
+                    ? GroupChat::where('id', $request->group_chat)->first()
+                    : GroupChat::create(['user_id' => auth()->id(), 'title' => $query]);
 
                 Chat::create([
                     'group_chat_id' => $groupChat->id,
@@ -126,45 +182,78 @@ class ChatController extends Controller
                 ]);
             }
 
-            // 7️⃣ Gabungkan context dari halaman terpilih
-            $context = "";
-            foreach ($topPages as $p) {
-                $context .= "Dokumen: {$p->title}, Halaman: {$p->page_number}\n";
-                $context .= "{$p->page_text}\n\n";
+            // 9) Bangun context terstruktur (REF[n]) + snippet (dipotong agar ringkas)
+            $docIndex = []; // document_id => REF number
+            $refCounter = 1;
+
+            // buat daftar referensi unik by doc untuk kontrol di prompt
+            $uniqueDocs = $selectedPages->groupBy('document_id')->map(function ($items) {
+                $first = $items->first();
+                return [
+                    'document_id' => $first->document_id,
+                    'title' => $first->title,
+                    'file_path' => $first->file_path,
+                    'pages' => $items->pluck('page_number')->unique()->values()->all(),
+                ];
+            })->values();
+
+            foreach ($uniqueDocs as $ud) {
+                $docIndex[$ud['document_id']] = $refCounter;
+                $refCounter++;
             }
 
-            // 8️⃣ Prompt ke Gemini
-            $prompt = "Gunakan informasi berikut untuk menjawab pertanyaan.\n\n"
-                . "Context:\n$context\n\n"
-                . "Pertanyaan: $query\n\n"
-                . "Format jawaban: Sebutkan nama dokumen dan halaman yang relevan, misal menurut dokumen A halaman xx dijelaskan... juga berikan jawaban dalam format HTML dalam bentuk poin-poin karena saya ingin menampilkannya di richtext, dan tanpa ada ```html```.\n"
+            // potong snippet per halaman
+            $makeSnippet = function ($text, $max = 700) {
+                $t = trim(preg_replace('/\s+/', ' ', $text));
+                if (mb_strlen($t, 'UTF-8') <= $max) return $t;
+                return mb_substr($t, 0, $max, 'UTF-8') . ' …';
+            };
+
+            $contextBlocks = [];
+            foreach ($uniqueDocs as $ud) {
+                $refNum = $docIndex[$ud['document_id']];
+                $pagesOfDoc = $selectedPages->where('document_id', $ud['document_id'])
+                    ->sortBy('page_number');
+
+                $block = "REF[$refNum]: {$ud['title']}\n";
+                foreach ($pagesOfDoc as $p) {
+                    $block .= "  - Halaman {$p->page_number}: " . $makeSnippet($p->page_text) . "\n";
+                }
+                $contextBlocks[] = $block;
+            }
+
+            $context = implode("\n", $contextBlocks);
+
+            // 10) Prompt Gemini yang memaksa menyebut semua referensi yang relevan
+            $prompt = "Gunakan hanya informasi pada daftar referensi berikut untuk menjawab pertanyaan.\n\n"
+                . "DAFTAR REFERENSI (gunakan format sitasi REF[n], halaman x):\n$context\n\n"
+                . "PERTANYAAN: $query\n\n"
+                . "PANDUAN JAWABAN (WAJIB DIIKUTI):\n"
+                . "1) Jawab ringkas dan terstruktur dalam HTML <ul><li>...</li></ul> (tanpa ```html```).\n"
+                . "2) Setiap butir yang menyebut fakta harus mencantumkan sitasi seperti (REF[n], hlm x).\n"
+                . "3) Jika ada lebih dari satu referensi relevan, gabungkan dan sebutkan semuanya pada butir terkait.\n"
+                . "4) Jangan gunakan sumber di luar daftar. Jika ada referensi yang tampak relevan tetapi tidak dipakai, tambahkan bagian 'Catatan' yang menjelaskan singkat alasannya.\n"
+                . "5) Di akhir, tambahkan bagian <h4>Ringkasan</h4> berisi 2-3 poin utama.\n\n"
                 . "Jawaban:";
 
-            $answer = $this->askGemini($prompt);
+            $answer = $this->askGemini($prompt) ?: '';
 
-            // 9️⃣ Filter referensi hanya yang disebut di jawaban
-            $mentionedDocs = [];
-            foreach ($topPages as $p) {
-                if (stripos($answer, $p->title) !== false) {
-                    $mentionedDocs[] = [
-                        'title' => $p->title,
-                        'file_path' => $p->file_path,
-                        'page_number' => $p->page_number
-                    ];
-                }
-            }
+            // 11) Siapkan daftar referensi untuk frontend (tidak bergantung pada apakah disebut di teks)
+            //     Kirim satu entry per halaman agar bisa ditautkan tepat sasaran.
+            $references = $selectedPages->map(function ($p) {
+                return [
+                    'title' => $p->title,
+                    'file_path' => $p->file_path,
+                    'page_number' => $p->page_number
+                ];
+            })->values()->all();
 
-            // 🔟 Simpan chat
+            // 12) Simpan chat & kembalikan response
             DB::beginTransaction();
             try {
-                if ($request->group_chat) {
-                    $groupChat = GroupChat::where('id', $request->group_chat)->first();
-                } else {
-                    $groupChat = GroupChat::create([
-                        'user_id' => auth()->id(),
-                        'title' => $query
-                    ]);
-                }
+                $groupChat = $request->group_chat
+                    ? GroupChat::where('id', $request->group_chat)->first()
+                    : GroupChat::create(['user_id' => auth()->id(), 'title' => $query]);
 
                 Chat::create([
                     'group_chat_id' => $groupChat->id,
@@ -177,20 +266,25 @@ class ChatController extends Controller
                     'group_chat_id' => $groupChat->id,
                     'is_system' => true,
                     'is_user' => false,
-                    'message' => $answer
+                    'message' => $answer !== '' ? $answer : 'Tidak ada jawaban'
                 ]);
 
                 DB::commit();
 
                 return response()->json([
                     'success' => true,
-                    'chat' => $answer ?: 'Tidak ada jawaban',
-                    'references' => $answer ? $mentionedDocs : [],
+                    'chat' => $answer !== '' ? $answer : 'Tidak ada jawaban',
+                    'references' => $answer !== '' ? $references : [],
                     'group_chat_id' => $groupChat->id
                 ]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error('Error saving chat', ['error' => $e->getMessage()]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menyimpan chat.'
+                ]);
             }
         } elseif ($request->type == 'Comply ISO 27001') {
             $request->validate([
