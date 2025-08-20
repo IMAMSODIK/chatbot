@@ -117,7 +117,7 @@
                             <li> <img id="alert-image" src="{{ asset('own_assets/icon/confirm.gif') }}" width="300px">
                             </li>
                         </ul>
-                        <h4 class="text-center pb-2" id="alert-title">Hapus Data</h4>
+                        <h4 class="text-center pb-2" id="alert-title">Verifikasi Data</h4>
                         <p class="text-center" id="alert-message">Apakah anda yakin ingin {{ $user->status ? 'menonaktifkan' : 'mengaktifkan' }} pengguna ini?</p>
                         <div class="row">
                             <div class="col-md-6 d-flex justify-content-end">
