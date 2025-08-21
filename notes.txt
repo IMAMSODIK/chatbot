@@ -662,3 +662,98 @@ e. Mendorong kesadaran terhadap pelindungan data pribadi di dalam perusahaan.
 f. Berkoordinasi dengan regulator/lembaga eksternal yang berwenang dan bertindak sebagai 
 narahubung untuk masalah yang berkaitan dengan pelindungan data pribadi. 
 g. Berhubungan dengan media terkait dengan masalah pelindungan data pribadi.
+
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	13/16 
+ 	Klasifikasi Terbatas 
+d. Vendor yang membantu Peruri dalam penyediaan sistem elektronik dan memenuhi 
+persyaratan keamanan informasi (disetujui kontrol keamanannya) 
+2. Peruri dapat mentransfer data pribadi kepada pihak eksternal di luar wilayah hukum Negara 
+Kesatuan Republik Indonesia dalam hal: 
+a. Negara tempat kedudukan pihak eksternal atau organisasi internasional yang menerima 
+transfer data pribadi memiliki tingkat pelindungan data pribadi yang setara atau lebih tinggi 
+dari yang diatur dalam kebijakan ini. 
+b. Terdapat perjanjian internasional antar negara yang memiliki standar dan/atau jaminan 
+pelindungan data pribadi sesuai dengan peraturan perundang-undangan yang berlaku; 
+dan/atau 
+c. Mendapat persetujuan pemilik data pribadi. 
+3. Pengiriman data pribadi yang dikelola oleh Peruri ke luar wilayah negara Republik Indonesia 
+harus:  
+a. Berkoordinasi dengan pejabat/lembaga yang diberi kewenangan untuk itu. 
+b. Menerapkan peraturan perundang-undangan mengenai pertukaran data pribadi lintas batas 
+negara. 
+c. Memenuhi persyaratan transfer yang ditetapkan Peruri kepada pihak ketiga 
+ 
+13. Risiko dan Dampak Pelindungan Data Pribadi  
+1. Risiko dan dampak pemrosesan data pribadi selama siklus hidupnya harus dikaji, diukur, 
+didokumentasikan dan ditangani dengan merujuk pada ketentuan manajemen risiko yang berlaku 
+di perusahaan. 
+2. Penilaian risiko dan dampak pelindungan data pribadi minimum mencakup antara lain: 
+ kondisi pelindungan data pribadi saat ini; 
+ penggunaan TI dalam pemrosesan data pribadi; 
+ perubahan konteks internal dan eksternal yang mempengaruhi proses pelindungan data 
+pribadi;  
+ tren dan/atau riwayat kasus kebocoran data pribadi, baik di luar atau di dalam perusahaan, 
+jika ada; 
+ jenis insiden dan/atau kegagalan terhadap pelindungan data pribadi lainnya 
+3. Rencana penanganan risiko dan dampak pelindungan data pribadi harus diterapkan dan dipantau 
+untuk menjamin agar dampaknya dapat diperkecil pada tingkat yang dapat diterima perusahaan.
+
+IT CORPORATE 
+GOVERNANCE 
+ 
+No. Dokumen : 02/ITG/DU-DK/I/2018 
+Mulai Berlaku : 06/07/2023 
+Revisi : 3 
+Tanggal Revisi : 06/07/2023 
+Klasifikasi 
+Dokumen 
+: Terbatas 
+ 
+ 
+IV. Kebijakan Pelindungan Data Pribadi 	14/16 
+ 	Klasifikasi Terbatas 
+14. Kegagalan dan/atau Insiden Pelindungan Data Pribadi  
+1. Setiap karyawan yang mengetahui adanya dugaan pelanggaran atau insiden data pribadi harus 
+segera melaporkan kepada Data Protection Officer (DPO) untuk dikaji dan diverifikasi validitas 
+dan ketepatan ketepatannya. 
+2. Insiden dan/atau kegagalan pelindungan data pribadi harus dilaporkan kepada lembaga yang 
+berwenang dan kepada pemilik data dalam waktu maksimum 3 x 24 jam setelah Data Protection 
+Officer (DPO) menyatakan laporan insiden dan/atau kegagalan pelindungan data pribadi valid dan 
+sah. 
+3. Insiden dan/atau kegagalan pelindungan data pribadi dalam bentuk sistem elektronik harus 
+dikoordinasikan bersama Divisi TI untuk penyelidikan lebih lanjut. 
+4. Penanganan insiden dan/atau kegagalan pelindungan data pribadi secara rinci didefinisikan 
+secara terpisah dalam Prosedur Penanganan Insiden Data Pribadi. 
+ 
+15. Keamanan Data Pribadi  
+Peruri menerapkan langkah-langkah pengamanan teknologi, organisasi dan fisik untuk melindungi 
+data pribadi dari kehilangan, penyalahgunaan, penghancuran. modifikasi secara tidak sah, akses atau 
+pengungkapan yang tidak sah baik disengaja maupun tidak disengaja. Pengamanan data pribadi yang 
+ditetapkan Peruri meliputi antara lain: 
+1. Akses terbatas hanya untuk personel yang berkualifikasi dan berwenang.  
+2. Data pribadi dalam format tercetak yang berada di meja kerja harus diamankan dan diawasi dari 
+kemungkinan dibaca oleh orang yang tidak berwenang. 
+3. Lemari yang berisi data pribadi harus selalu dalam keadaan terkunci. 
+4. Komputer harus dilindungi dengan kontrol keamanan antara lain: 
+a. Akses komputer dengan password yang kuat dan diubah secara berkala; 
+b. Menerapkan screen lock berpassword secara otomatis setelah 5 (lima) menit tidak aktif; 
+c. Dimatikan saat ditinggalkan tanpa pengawasan; 
+d. Dilengkapi dengan software antivirus yang diperbarui secara berkala   
+5. Server yang berisi data pribadi harus ditempatkan di lokasi yang aman dan dilengkapi dengan 
+sistem pengamanan fisik dan lingkungan yang memadai. 
+6. Setiap pelanggaran terhadap kebijakan pelindungan data pribadi harus dilaporkan dan 
+ditindaklanjuti sesuai ketentuan perusahaan dan peraturan perundang-undangan yang berlaku. 
+Kontrol-kontrol pengamanan data pribadi lainnya merujuk pada Kebijakan Sistem Manajemen 
+Pengamanan Informasi yang merupakan bagian dari Kebijakan Tata Kelola TI perusahaan.

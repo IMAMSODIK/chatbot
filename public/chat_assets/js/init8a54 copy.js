@@ -202,81 +202,81 @@ var FrenifyTechWaveTime = new Date;
 					o = "";
 				i = e(".fn__chatbot .chat__item.active .chat__box").length;
 				
-				var n = {
-					welcome: {
-						type: "text",
-						description: "welcome message",
-						text: "<p>Frenify was founded in 2017. The company began working with the first customers, giving them the opportunity to purchase high-quality HTML templates.</p><p>The company’s products began to grow in terms of complexity and aesthetics. Frenify currently has a wide range of HTML templates, WordPress themes, WordPress plugins, Photoshop projects; paid and absolutely free products.</p><p>Design projects are unique and aesthetically pleasing based on customer requirements. Visit our website to get acquainted with our products. Thank you so much for being with us.</p>",
-						append: !0
-					},
-					about: {
-						type: "text",
-						description: "some information about the Frenify team",
-						text: "<p>Frenify was founded in 2017. The company began working with the first customers, giving them the opportunity to purchase high-quality HTML templates.</p><p>The company’s products began to grow in terms of complexity and aesthetics. Frenify currently has a wide range of HTML templates, WordPress themes, WordPress plugins, Photoshop projects; paid and absolutely free products.</p><p>Design projects are unique and aesthetically pleasing based on customer requirements. Visit our website to get acquainted with our products. Thank you so much for being with us.</p>",
-						append: !0
-					},
-					website: {
-						type: "url",
-						description: "go to our official website",
-						append: !1,
-						url: "https://frenify.com/"
-					},
-					free: {
-						type: "url",
-						description: "get PSD files of premium themes for free",
-						append: !1,
-						url: "https://frenify.com/freebies/"
-					},
-					doc: {
-						type: "url",
-						description: "visit online documentation for TechWave HTML template",
-						append: !1,
-						url: "https://frenify.com/work/envato/frenify/html/techwave/doc"
-					},
-					support: {
-						type: "url",
-						description: "if you have any questions regarding TechWave HTML template feel free and contact us by this command",
-						append: !1,
-						url: "https://themeforest.net/item/techwave-ai-html-dashboard-for-image-generation-chat-bot/46197058/support/contact"
-					},
-					purchase: {
-						type: "url",
-						description: "open the template description page on themeforest to purchase it",
-						append: !1,
-						url: "https://themeforest.net/item/techwave-ai-html-dashboard-for-image-generation-chat-bot/46197058"
-					},
-					youtube: {
-						type: "url",
-						description: "visit our youtube channel with video guides on our themes and templates",
-						append: !1,
-						url: "https://www.youtube.com/@frenifyteam/videos"
-					},
-					pass: {
-						type: "password",
-						description: "if you want to get strong password I can generate it for you, write <frenify_main>/pass 20</frenify_main> to get a 20 character password",
-						append: !0
-					},
-					joke: {
-						type: "joke",
-						description: "I can cheer you up by telling a joke",
-						append: !0
-					},
-					time: {
-						type: "time",
-						description: "display current time",
-						append: !0
-					},
-					clear: {
-						type: "clear",
-						description: "to clear current chat",
-						append: !1
-					},
-					commands: {
-						type: "commands",
-						description: "to list all available commands",
-						append: !0
-					}
-				};
+				// var n = {
+				// 	welcome: {
+				// 		type: "text",
+				// 		description: "welcome message",
+				// 		text: "<p>Frenify was founded in 2017. The company began working with the first customers, giving them the opportunity to purchase high-quality HTML templates.</p><p>The company’s products began to grow in terms of complexity and aesthetics. Frenify currently has a wide range of HTML templates, WordPress themes, WordPress plugins, Photoshop projects; paid and absolutely free products.</p><p>Design projects are unique and aesthetically pleasing based on customer requirements. Visit our website to get acquainted with our products. Thank you so much for being with us.</p>",
+				// 		append: !0
+				// 	},
+				// 	about: {
+				// 		type: "text",
+				// 		description: "some information about the Frenify team",
+				// 		text: "<p>Frenify was founded in 2017. The company began working with the first customers, giving them the opportunity to purchase high-quality HTML templates.</p><p>The company’s products began to grow in terms of complexity and aesthetics. Frenify currently has a wide range of HTML templates, WordPress themes, WordPress plugins, Photoshop projects; paid and absolutely free products.</p><p>Design projects are unique and aesthetically pleasing based on customer requirements. Visit our website to get acquainted with our products. Thank you so much for being with us.</p>",
+				// 		append: !0
+				// 	},
+				// 	website: {
+				// 		type: "url",
+				// 		description: "go to our official website",
+				// 		append: !1,
+				// 		url: "https://frenify.com/"
+				// 	},
+				// 	free: {
+				// 		type: "url",
+				// 		description: "get PSD files of premium themes for free",
+				// 		append: !1,
+				// 		url: "https://frenify.com/freebies/"
+				// 	},
+				// 	doc: {
+				// 		type: "url",
+				// 		description: "visit online documentation for TechWave HTML template",
+				// 		append: !1,
+				// 		url: "https://frenify.com/work/envato/frenify/html/techwave/doc"
+				// 	},
+				// 	support: {
+				// 		type: "url",
+				// 		description: "if you have any questions regarding TechWave HTML template feel free and contact us by this command",
+				// 		append: !1,
+				// 		url: "https://themeforest.net/item/techwave-ai-html-dashboard-for-image-generation-chat-bot/46197058/support/contact"
+				// 	},
+				// 	purchase: {
+				// 		type: "url",
+				// 		description: "open the template description page on themeforest to purchase it",
+				// 		append: !1,
+				// 		url: "https://themeforest.net/item/techwave-ai-html-dashboard-for-image-generation-chat-bot/46197058"
+				// 	},
+				// 	youtube: {
+				// 		type: "url",
+				// 		description: "visit our youtube channel with video guides on our themes and templates",
+				// 		append: !1,
+				// 		url: "https://www.youtube.com/@frenifyteam/videos"
+				// 	},
+				// 	pass: {
+				// 		type: "password",
+				// 		description: "if you want to get strong password I can generate it for you, write <frenify_main>/pass 20</frenify_main> to get a 20 character password",
+				// 		append: !0
+				// 	},
+				// 	joke: {
+				// 		type: "joke",
+				// 		description: "I can cheer you up by telling a joke",
+				// 		append: !0
+				// 	},
+				// 	time: {
+				// 		type: "time",
+				// 		description: "display current time",
+				// 		append: !0
+				// 	},
+				// 	clear: {
+				// 		type: "clear",
+				// 		description: "to clear current chat",
+				// 		append: !1
+				// 	},
+				// 	commands: {
+				// 		type: "commands",
+				// 		description: "to list all available commands",
+				// 		append: !0
+				// 	}
+				// };
 
 				o = "<ul>", e.each(n, function(e, t) {
 					o += "<li><frenify_main>/" + e + "</frenify_main> - " + t.description + "</li>"
