@@ -29,44 +29,76 @@ class ChatController extends Controller
         // Pisahkan per baris
         $lines = preg_split('/\r\n|\r|\n/', $clean);
 
-        $grouped = [];
-        $currentKey = null;
+        $html = '';
+        $currentDoc = '';
+        $inList = false;
 
         foreach ($lines as $line) {
             $line = trim($line);
             if ($line === '') continue;
 
-            // Cek apakah baris mengandung "Dokumen xxx halaman y"
-            if (preg_match('/Dokumen (.+?) halaman (\d+)/i', $line, $matches)) {
-                $currentKey = "Dokumen {$matches[1]} halaman {$matches[2]}";
-
-                // Jika key belum ada, buat baru
-                if (!isset($grouped[$currentKey])) {
-                    $grouped[$currentKey] = [];
+            // Cek apakah baris mengandung pola dokumen (berdasarkan prompt baru)
+            if (preg_match('/<strong>(.+?\.pdf), Halaman (\d+):<\/strong>/i', $line, $matches)) {
+                // Jika sebelumnya ada list yang belum ditutup, tutup dulu
+                if ($inList) {
+                    $html .= '</ul>';
+                    $inList = false;
                 }
 
-                // Ambil sisa teks setelah pola (jika ada) → jadikan poin
-                $remaining = trim(str_replace($matches[0], '', $line));
-                if ($remaining !== '') {
-                    $grouped[$currentKey][] = $remaining;
+                $currentDoc = $matches[1];
+                $html .= "<p><strong>{$matches[1]}, Halaman {$matches[2]}:</strong> ";
+
+                // Ambil teks penjelasan setelah tag strong
+                $explanation = trim(str_replace($matches[0], '', $line));
+                if (!empty($explanation)) {
+                    $html .= $explanation . '</p>';
+                } else {
+                    $html .= '</p>';
                 }
-            } elseif ($currentKey !== null) {
-                // Kalau bukan header tapi bagian dari poin dokumen aktif
-                $grouped[$currentKey][] = $line;
+            }
+            // Cek pola alternatif tanpa tag HTML
+            elseif (preg_match('/(.+?\.pdf), Halaman (\d+):(.+)/i', $line, $matches)) {
+                // Jika sebelumnya ada list yang belum ditutup, tutup dulu
+                if ($inList) {
+                    $html .= '</ul>';
+                    $inList = false;
+                }
+
+                $currentDoc = trim($matches[1]);
+                $html .= "<p><strong>{$matches[1]}, Halaman {$matches[2]}:</strong> " .
+                    trim($matches[3]) . '</p>';
+            }
+            // Cek jika baris berisi poin-poin (diawali dengan - atau •)
+            elseif (preg_match('/^[\-\•]\s+(.+)/', $line, $matches)) {
+                if (!$inList) {
+                    $html .= '<ul>';
+                    $inList = true;
+                }
+                $html .= '<li>' . e(trim($matches[1])) . '</li>';
+            }
+            // Cek jika baris berisi poin numerik (1., 2., etc)
+            elseif (preg_match('/^\d+\.\s+(.+)/', $line, $matches)) {
+                if (!$inList) {
+                    $html .= '<ul>';
+                    $inList = true;
+                }
+                $html .= '<li>' . e(trim($matches[1])) . '</li>';
+            } else {
+                // Jika baris biasa, tambahkan sebagai paragraf
+                if ($inList) {
+                    $html .= '</ul>';
+                    $inList = false;
+                }
+                $html .= '<p>' . e($line) . '</p>';
             }
         }
 
-        // Konversi ke HTML
-        $html = '';
-        foreach ($grouped as $doc => $points) {
-            $html .= "<p><strong>$doc</strong></p><ul>";
-            foreach ($points as $p) {
-                $html .= '<li>' . e($p) . '</li>';
-            }
+        // Tutup tag ul jika masih terbuka
+        if ($inList) {
             $html .= '</ul>';
         }
 
-        return $html !== '' ? $html : nl2br(e($clean));
+        return $html !== '' ? $html : '<p>' . nl2br(e($clean)) . '</p>';
     }
 
     public function index(Request $r)
