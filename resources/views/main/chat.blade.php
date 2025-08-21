@@ -457,7 +457,7 @@
                     <!-- !#2 navigation group -->
 
                     <!-- #3 navigation group -->
-                    {{-- <div class="nav_group">
+                    <div class="nav_group">
                         <h2 class="group__title">Support</h2>
                         <ul class="group__list">
                             <li>
@@ -505,7 +505,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div> --}}
+                    </div>
                     <!-- !#3 navigation group -->
 
 
