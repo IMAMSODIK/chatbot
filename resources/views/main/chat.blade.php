@@ -561,10 +561,10 @@
                             <div class="chat__comment">
                                 <div class="container">
                                     <div class="fn__chat_comment">
-                                        <div class="new__chat">
+                                        {{-- <div class="new__chat">
                                             <p>Ask it questions, engage in discussions, or simply enjoy a friendly chat.
                                             </p>
-                                        </div>
+                                        </div> --}}
                                         <textarea rows="1" class="fn__hidden_textarea" tabindex="-1"></textarea>
                                         <textarea rows="1" placeholder="Send a message..." id="fn__chat_textarea"></textarea>
                                         <input type="file" name="" id="input_file" accept="pdf"
