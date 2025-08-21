@@ -256,10 +256,11 @@ class ChatController extends Controller
                 . "Format jawaban YANG WAJIB:\n"
                 . "1. Ringkas setiap dokumen dalam 1 paragraf relevan per topik.\n"
                 . "2. Tuliskan nama dokumen dan halaman dalam bentuk poin-poin dan bold, contoh:\n"
-                . "03.BAB-III-Kebijakan-SMPI.pdf, Halaman 14:\n[Ringkasan informasi password di dokumen ini]\n"
+                . "03.BAB-III-Kebijakan-SMPI.pdf, Halaman 14:\n[Ringkasan informasi password di dokumen ini (berikan ringkasan versi anda)]\n"
                 . "3. Hanya tampilkan informasi relevan terkait pertanyaan.\n"
                 . "4. Jangan tampilkan potongan halaman mentah.\n"
-                . "5. Tulis semua jawaban langsung dalam format html yang support richtext.\n\n"
+                . "5. Tulis semua jawaban langsung dalam format html yang support richtext.\n"
+                . "6. heading paling besar adalah h3.\n\n"
                 . "Jawaban:";
 
             $rawAnswer = $this->askGemini($prompt) ?: '';
