@@ -125,7 +125,7 @@ class ChatController extends Controller
         ]);
     }
 
-    // Ambil semua halaman yang sudah memiliki embedding
+    // Ambil halaman dokumen yang sudah ada embedding
     $pages = DB::table('document_pages')
         ->join('documents', 'document_pages.document_id', '=', 'documents.id')
         ->whereNotNull('document_pages.embed')
@@ -140,17 +140,28 @@ class ChatController extends Controller
         )
         ->get();
 
-    // Hitung skor cosine similarity tanpa keyword boost
-    $scored = $pages->map(function ($p) use ($queryEmbedding) {
+    // Fungsi untuk memeriksa keberadaan kata
+    $containsAny = function (string $haystack, array $needles): bool {
+        $hl = mb_strtolower($haystack, 'UTF-8');
+        foreach ($needles as $n) {
+            if (mb_strpos($hl, $n) !== false) return true;
+        }
+        return false;
+    };
+
+    // Hitung skor cosine similarity + boost jika halaman mengandung kata pertanyaan
+    $keywords = explode(' ', mb_strtolower($query, 'UTF-8'));
+    $scored = $pages->map(function ($p) use ($queryEmbedding, $keywords, $containsAny) {
         $pageEmbedding = isset($p->embed) ? json_decode($p->embed, true) : null;
         $sim = $pageEmbedding ? $this->cosineSimilarity($queryEmbedding, $pageEmbedding) : 0.0;
+        $boost = $containsAny($p->page_text ?? '', $keywords) ? 0.2 : 0.0;
         $p->similarity = $sim;
-        $p->score = $sim; // Hanya cosine similarity
+        $p->score = $sim + $boost;
         return $p;
     });
 
-    // Ambil top 100 halaman relevan
-    $candidatePages = $scored->sortByDesc('score')->take(100);
+    // Ambil top 50 halaman relevan
+    $candidatePages = $scored->sortByDesc('score')->take(50);
 
     // Sebar per dokumen
     $pagesPerDoc = 2;
@@ -166,7 +177,7 @@ class ChatController extends Controller
         }
     }
 
-    // Fallback LIKE query jika tetap kosong
+    // Jika tetap kosong → fallback LIKE query
     if ($selectedPages->isEmpty()) {
         $likePages = DB::table('document_pages')
             ->join('documents', 'document_pages.document_id', '=', 'documents.id')
@@ -238,17 +249,17 @@ class ChatController extends Controller
     }
     $context = implode("\n\n", $contextBlocks);
 
-    $prompt = "Berdasarkan context berikut, buat ringkasan informasi relevan terkait pertanyaan berikut.\n\n"
+    // Prompt Gemini → sesuai pertanyaan
+    $prompt = "Berdasarkan context berikut, buat ringkasan informasi relevan terkait pertanyaan:\n\n"
         . "Pertanyaan: $query\n\n"
         . "Context:\n$context\n\n"
         . "Format jawaban YANG WAJIB:\n"
         . "1. Ringkas setiap dokumen dalam 1 paragraf relevan per topik.\n"
-        . "2. Tuliskan nama dokumen dan halaman dalam bentuk poin-poin dan bold, contoh:\n"
-        . "03.BAB-III-Kebijakan-SMPI.pdf, Halaman 14:\n[Ringkasan informasi di dokumen ini (berikan ringkasan versi anda)]\n"
+        . "2. Tuliskan nama dokumen dan halaman dalam bentuk poin-poin dan bold.\n"
         . "3. Hanya tampilkan informasi relevan terkait pertanyaan.\n"
         . "4. Jangan tampilkan potongan halaman mentah.\n"
         . "5. Tulis semua jawaban langsung dalam format html yang support richtext.\n"
-        . "6. heading paling besar adalah h3.\n\n"
+        . "6. Heading paling besar adalah h3.\n\n"
         . "Jawaban:";
 
     $rawAnswer = $this->askGemini($prompt) ?: '';
