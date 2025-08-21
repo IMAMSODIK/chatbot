@@ -185,19 +185,19 @@
 
                 <!-- Header left: token information -->
                 <div class="header__left">
-                    <div class="fn__token_info">
-                        {{-- <span class="token_summary">
+                    {{-- <div class="fn__token_info">
+                        <span class="token_summary">
                             <span class="count">120</span>
                             <span class="text">Tokens<br>Remain</span>
-                        </span> --}}
-                        <a style="cursor: pointer"
-                            class="chat_type__trigger token_upgrade techwave_fn_button"><span id="chat-type"
+                        </span>
+                        <a id="chat_type__trigger" style="cursor: pointer"
+                            class="token_upgrade techwave_fn_button"><span id="chat-type"
                                 data-type="Tanya Jawab">Tanya Jawab</span></a>
                         <div class="token__popup">
                             Silahkan pilih jenis chat yang ingin Anda gunakan. Setiap jenis chat memiliki fitur dan
                             batasan yang berbeda.
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /Header left: token information -->
 
@@ -458,8 +458,8 @@
                                 <span class="count">120</span>
                                 <span class="text">Tokens<br>Remain</span>
                             </span> --}}
-                            <a style="cursor: pointer"
-                                class="chat_type__trigger token_upgrade techwave_fn_button"><span id="chat-type"
+                            <a id="chat_type__trigger" style="cursor: pointer"
+                                class="token_upgrade techwave_fn_button"><span id="chat-type"
                                     data-type="Tanya Jawab">Tanya Jawab</span></a>
                             <div class="token__popup">
                                 Silahkan pilih jenis chat yang ingin Anda gunakan. Setiap jenis chat memiliki fitur dan
@@ -684,7 +684,7 @@
     <script>
         let ct = $(".techwave_fn_chat-type");
 
-        $(".chat_type__trigger").on("click", function() {
+        $("#chat_type__trigger").on("click", function() {
             ct.addClass("opened");
         })
 
