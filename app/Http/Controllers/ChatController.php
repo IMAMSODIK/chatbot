@@ -311,7 +311,7 @@ class ChatController extends Controller
         . "4. Gunakan format: [Nama File.pdf], Halaman [X] (dengan font bold tanpa tanda **): \n[Penjelasan singkat tentang informasi password dalam dokumen ini]\n"
         . "5. Jangan membuat informasi yang tidak ada dalam dokumen\n"
         . "6. Jika ada kebijakan spesifik tentang password, jelaskan dengan detail\n"
-        . "7. Gunakan bahasa Indonesia yang formal dan jelas serta buat dalam format html yang mendukung untuk richtext\n\n"
+        . "7. Gunakan bahasa Indonesia yang formal dan jelas\n\n"
         . "JAWABAN:";
 
     $rawAnswer = $this->askGemini($prompt) ?: '';
