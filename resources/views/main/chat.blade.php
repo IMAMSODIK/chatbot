@@ -452,12 +452,27 @@
                                     <span class="text">AI Chat Bot</span>
                                 </a>
                             </li>
+                            <li>
+                                <div class="fn__token_info">
+                                    {{-- <span class="token_summary">
+                                        <span class="count">120</span>
+                                        <span class="text">Tokens<br>Remain</span>
+                                    </span> --}}
+                                    <a id="chat_type__trigger" style="cursor: pointer"
+                                        class="token_upgrade techwave_fn_button"><span id="chat-type"
+                                            data-type="Tanya Jawab">Tanya Jawab</span></a>
+                                    <div class="token__popup">
+                                        Silahkan pilih jenis chat yang ingin Anda gunakan. Setiap jenis chat memiliki fitur dan
+                                        batasan yang berbeda.
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <!-- !#2 navigation group -->
 
                     <!-- #3 navigation group -->
-                    <div class="nav_group">
+                    {{-- <div class="nav_group">
                         <h2 class="group__title">Support</h2>
                         <ul class="group__list">
                             <li>
@@ -505,7 +520,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                     <!-- !#3 navigation group -->
 
 
