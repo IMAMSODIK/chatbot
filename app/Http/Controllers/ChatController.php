@@ -92,10 +92,7 @@ class ChatController extends Controller
             // Ambil semua teks dokumen untuk dictionary typo
             $allTexts = DB::table('document_pages')->pluck('page_text')->implode(' ');
             $allWords = preg_split('/[\s,.\-:;()]+/', mb_strtolower($allTexts, 'UTF-8'));
-            $allWords = array_unique(array_filter($allWords));
-
-            $extraWords = ['pribadi', 'privasi', 'password', 'sandi', 'credential', 'login', 'pegawai', 'aset'];
-            $dictionary = array_unique(array_merge($allWords, $extraWords));
+            $dictionary = array_unique(array_filter($allWords));
 
             // Normalisasi typo
             $words = explode(' ', $query);
@@ -128,7 +125,7 @@ class ChatController extends Controller
                 ]);
             }
 
-            // Ambil halaman dokumen yang sudah ada embedding
+            // Ambil semua halaman yang sudah memiliki embedding
             $pages = DB::table('document_pages')
                 ->join('documents', 'document_pages.document_id', '=', 'documents.id')
                 ->whereNotNull('document_pages.embed')
@@ -143,8 +140,7 @@ class ChatController extends Controller
                 )
                 ->get();
 
-            // Filter halaman yang relevan dulu
-            $keywords = ['password', 'login', 'akun', 'hak akses', 'credential'];
+            // Fungsi untuk memeriksa keberadaan kata
             $containsAny = function (string $haystack, array $needles): bool {
                 $hl = mb_strtolower($haystack, 'UTF-8');
                 foreach ($needles as $n) {
@@ -152,12 +148,43 @@ class ChatController extends Controller
                 }
                 return false;
             };
-            $pages = $pages->filter(fn($p) => $containsAny($p->page_text ?? '', $keywords));
 
-            // Jika tidak ada hasil relevan, ambil fallback semua halaman
-            if ($pages->isEmpty()) {
-                $pages = DB::table('document_pages')
+            // Hitung skor cosine similarity + optional keyword boost
+            $scored = $pages->map(function ($p) use ($queryEmbedding, $query, $containsAny) {
+                $pageEmbedding = isset($p->embed) ? json_decode($p->embed, true) : null;
+                $sim = $pageEmbedding ? $this->cosineSimilarity($queryEmbedding, $pageEmbedding) : 0.0;
+
+                // Boost jika halaman mengandung kata dari pertanyaan
+                $keywords = explode(' ', mb_strtolower($query, 'UTF-8'));
+                $boost = $containsAny($p->page_text ?? '', $keywords) ? 0.2 : 0.0;
+
+                $p->similarity = $sim;
+                $p->score = $sim + $boost;
+                return $p;
+            });
+
+            // Ambil top 50 halaman relevan
+            $candidatePages = $scored->sortByDesc('score')->take(50);
+
+            // Sebar per dokumen
+            $pagesPerDoc = 2;
+            $maxDocs = 8;
+            $grouped = $candidatePages->groupBy('document_id')
+                ->map(fn($items) => $items->sortByDesc('score')->take($pagesPerDoc)->values());
+            $orderedDocs = $grouped->sortByDesc(fn($collection) => $collection->max('score'))->take($maxDocs);
+
+            $selectedPages = collect();
+            foreach ($orderedDocs as $collection) {
+                foreach ($collection as $p) {
+                    $selectedPages->push($p);
+                }
+            }
+
+            // Jika tetap kosong → fallback LIKE query
+            if ($selectedPages->isEmpty()) {
+                $likePages = DB::table('document_pages')
                     ->join('documents', 'document_pages.document_id', '=', 'documents.id')
+                    ->where('document_pages.page_text', 'LIKE', "%{$query}%")
                     ->select(
                         'document_pages.id',
                         'document_pages.document_id',
@@ -168,32 +195,7 @@ class ChatController extends Controller
                     )
                     ->take(50)
                     ->get();
-            }
-
-            // Hitung skor cosine similarity + boost keyword
-            $scored = $pages->map(function ($p) use ($queryEmbedding, $keywords, $containsAny) {
-                $pageEmbedding = isset($p->embed) ? json_decode($p->embed, true) : null;
-                $sim = $pageEmbedding ? $this->cosineSimilarity($queryEmbedding, $pageEmbedding) : 0.0;
-                $boost = $containsAny($p->page_text ?? '', $keywords) ? 0.25 : 0.0;
-                $p->similarity = $sim;
-                $p->score = $sim + $boost;
-                return $p;
-            });
-
-            // Ambil top 50 halaman
-            $candidatePages = $scored->sortByDesc('score')->take(50);
-
-            // Sebar per dokumen
-            $pagesPerDoc = 2;
-            $maxDocs = 8;
-            $grouped = $candidatePages->groupBy('document_id')->map(fn($items) => $items->sortByDesc('score')->take($pagesPerDoc)->values());
-            $orderedDocs = $grouped->sortByDesc(fn($collection) => $collection->max('score'))->take($maxDocs);
-
-            $selectedPages = collect();
-            foreach ($orderedDocs as $collection) {
-                foreach ($collection as $p) {
-                    $selectedPages->push($p);
-                }
+                $selectedPages = $likePages;
             }
 
             // Jika tetap kosong → tidak ada jawaban
@@ -250,23 +252,24 @@ class ChatController extends Controller
             }
             $context = implode("\n\n", $contextBlocks);
 
-            // Prompt Gemini: fokus ringkas per dokumen, format output seperti contoh
-            $prompt = "Berdasarkan context berikut, buat ringkasan informasi tentang password dan keamanan akun.\n\n"
+            $prompt = "Berdasarkan context berikut, buat ringkasan informasi relevan terkait pertanyaan berikut.\n\n"
+                . "Pertanyaan: $query\n\n"
                 . "Context:\n$context\n\n"
                 . "Format jawaban YANG WAJIB:\n"
                 . "1. Ringkas setiap dokumen dalam 1 paragraf relevan per topik.\n"
                 . "2. Tuliskan nama dokumen dan halaman dalam bentuk poin-poin dan bold, contoh:\n"
-                . "03.BAB-III-Kebijakan-SMPI.pdf, Halaman 14:\n[Ringkasan informasi password di dokumen ini (berikan ringkasan versi anda)]\n"
+                . "03.BAB-III-Kebijakan-SMPI.pdf, Halaman 14:\n[Ringkasan informasi di dokumen ini (berikan ringkasan versi anda)]\n"
                 . "3. Hanya tampilkan informasi relevan terkait pertanyaan.\n"
                 . "4. Jangan tampilkan potongan halaman mentah.\n"
                 . "5. Tulis semua jawaban langsung dalam format html yang support richtext.\n"
                 . "6. heading paling besar adalah h3.\n\n"
                 . "Jawaban:";
 
+
             $rawAnswer = $this->askGemini($prompt) ?: '';
             $answer = $this->formatGeminiResponse($rawAnswer);
 
-            // Siapkan daftar referensi
+            // Daftar referensi
             $references = $selectedPages->map(fn($p) => [
                 'title' => $p->title,
                 'file_path' => $p->file_path,
